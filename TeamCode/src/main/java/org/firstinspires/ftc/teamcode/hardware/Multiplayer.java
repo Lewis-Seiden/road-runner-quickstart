@@ -40,13 +40,12 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerOpenDC();
 //                telemetry.addLine("Wobbler Opening");
             }
-            if (gamepad2.left_stick_y == 1) {
+            if (gamepad2.left_stick_y > 0.05) {
                 wobbler.wobblerDown();
-            } else if (gamepad2.left_stick_y == -1) {
+            } else if (gamepad2.left_stick_y < -0.05) {
                 wobbler.wobblerUp();
-            } else {
-                wobbler.wobblerCarry();
             }
+
 
             if (gamepad2.right_trigger > 0.1) {
                 if (gamepad2.left_trigger > 0.1) {
