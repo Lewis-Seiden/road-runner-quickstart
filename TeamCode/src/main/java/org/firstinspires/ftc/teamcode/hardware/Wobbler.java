@@ -41,14 +41,16 @@ public class Wobbler {
 
     //robot grabs the wobbler
     public void wobblerDown(){
-        wobblerLifter.setTargetPosition(1);
-        wobblerLifter.setPower(0.3);
+        if(wobblerLifter.getCurrentPosition() > 10) {
+            wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() + 10);
+            wobblerLifter.setPower(0.3);
+        }
 //        telemetry.addLine("Wobbler down function called.");
     }
     //wobbler gets put down
     public void wobblerFull() {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
-        wobblerLifter.setTargetPosition(-2867);
+        wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() - 100);
         wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         wobblerLifter.setPower(-0.3);
 //        telemetry.addLine("Wobbler up function called.");
@@ -58,11 +60,13 @@ public class Wobbler {
     }
     public void wobblerUp() {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
-        wobblerLifter.setTargetPosition(-100);
-        wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wobblerLifter.setPower(-0.3);
+        if(wobblerLifter.getCurrentPosition() > -6000) {
+            wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() + -10);
+            wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            wobblerLifter.setPower(-0.3);
 //        telemetry.addLine("Wobbler up function called.");
-        telemetry.update();
+            telemetry.update();
+        }
 //        t.addLine(encoder.pos);
 
     }
@@ -73,7 +77,7 @@ public class Wobbler {
          if(wobblerLifter.getCurrentPosition() > wobblerLifter.getTargetPosition()) {
              wobblerLifter.setPower(-0.2);
          } else {
-             wobblerLifter.setPower(0.2);
+             wobblerLifter.setPower(0.7);
          }
 //         telemetry.addLine("Wobbler in carry position function called.");
          telemetry.update();
