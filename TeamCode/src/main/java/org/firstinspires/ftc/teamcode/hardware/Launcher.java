@@ -47,20 +47,14 @@ public class Launcher {
         launcherFlywheel.setPower(speed);
     }
 
-    public void runIntake(double speed) {
-        inTake.setPower(speed);
-    }
+
 
 
 
         //push1.setPosition(1);
         //push1.setPosition(1);
 
-    public void runDaRunner(double speed)
-    {
-        runner.setPower(speed);
-    }
-
+    //runs the flywheel
     public void SpinFlywheel(double speed){
         launcherFlywheel.setPower(11.5/ Voltage.getVoltage(hardwareMap) * speed);//change the number to change target voltage
     }
