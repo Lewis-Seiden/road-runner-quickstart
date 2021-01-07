@@ -26,9 +26,8 @@ public class Multiplayer extends LinearOpMode {
         double fineTune = 1;
         boolean ringIn = false;
         boolean endgame = false;
-        ElevatorMoveEventManager move = new ElevatorMoveEventManager(launcher, this);
         waitForStart();
-        move.start();
+        start();
         launcher.runDaRunner(1);
         while (opModeIsActive()) {
             mecanumDrive.SetPowerMecanum(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, fineTune);
@@ -83,23 +82,9 @@ public class Multiplayer extends LinearOpMode {
 //                telemetry.addLine("Shooter pusher not pushing");
             }
 
-            if (gamepad2.x && !(gamepad1.right_trigger > 0.1)) {
-                ringIn = false;
-                move.elevatorMove();
-            }
 
-            if (move.elevatorMoveRequsted || gamepad2.right_trigger > 0.1 && !gamepad2.left_bumper)
-            {
-                launcher.runIntake(0);
-            }
-            else if (gamepad2.y)
-            {
-                launcher.runIntake(-1);
-            }
-            else
-            {
-                launcher.runIntake(1);
-            }
+
+
 
 
             //        if(gamepad2.right_stick_y > 0.1){
@@ -111,11 +96,6 @@ public class Multiplayer extends LinearOpMode {
             //        }
             //        telemetry.addLine("offset " + move.offset);
             ringIn = launcher.ringSensor.isPressed();
-            if (ringIn) {
-                telemetry.addLine("Ring in");
-                move.elevatorMove();
-                ringIn = false;
-            }
 
             //if (!move.elevatorMoveRequsted){
             //            launcher.elevator.setTargetPosition(move.offset);
