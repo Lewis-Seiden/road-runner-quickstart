@@ -63,4 +63,4 @@ public class MaxAngularVeloTuner extends LinearOpMode {
 
         while (!isStopRequested()) idle();
     }
-}
+} 
