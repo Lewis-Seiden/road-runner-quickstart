@@ -27,10 +27,10 @@ public class RobotDriverControl extends LinearOpMode {
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         launcher.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double fineTune = 1;
-        ElevatorMoveEventManager move = new ElevatorMoveEventManager(launcher, this);
+//        ElevatorMoveEventManager move = new ElevatorMoveEventManager(launcher, this);
         waitForStart();
-        move.start();
-        launcher.runDaRunner(1);
+     //   move.start();
+//        launcher.runDaRunner(1);
         while(opModeIsActive()) {
             mecanumDrive.SetPowerMecanum(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, fineTune);
             if(gamepad1.b)
@@ -46,7 +46,7 @@ public class RobotDriverControl extends LinearOpMode {
                 telemetry.update();
             }
             if (gamepad1.x) {
-                move.elevatorMove();
+       //         move.elevatorMove();
             }
             if (gamepad1.dpad_up)
             {
@@ -89,14 +89,14 @@ public class RobotDriverControl extends LinearOpMode {
             } else {
                 fineTune = 1;
             }
-            if (gamepad1.left_bumper){
-                launcher.runIntake(1);
-            } else {
-                launcher.runIntake(0);
-            }
-            if (gamepad1.y){
-                launcher.runIntake(-1);
-            }
+//            if (gamepad1.left_bumper){
+//                launcher.runIntake(1);
+//            } else {
+//                launcher.runIntake(0);
+//            }
+//            if (gamepad1.y){
+//                launcher.runIntake(-1);
+//            }
 
         }
     }
