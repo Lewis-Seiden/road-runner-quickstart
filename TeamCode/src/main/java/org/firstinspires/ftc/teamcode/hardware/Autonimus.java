@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
+import org.firstinspires.ftc.teamcode.AutoMethods;
 import org.firstinspires.ftc.teamcode.vision.UltamiteGoalPipeline;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvWebcam;
@@ -59,7 +60,7 @@ public class Autonimus extends AutoMethods {
             else if(x == 1)
            {
                RSquareWobbler();
-            }*/
+            }
             else if(x == 2)
             {
                 BLSquareWobbler();
@@ -102,7 +103,7 @@ public class Autonimus extends AutoMethods {
             telemetry.update();
 
         }
-    test
+
    }
 }
 //ingore
