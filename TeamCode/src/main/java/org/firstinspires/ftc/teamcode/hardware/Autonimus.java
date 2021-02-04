@@ -36,6 +36,7 @@ public class Autonimus extends AutoMethods {
         webcam.openCameraDevice();
         webcam.startStreaming(320,240);
         sleep(200);
+
         int x = testPipeline.stack;
             x = 0; //x overide for testing
         if (x == 4) {
@@ -67,6 +68,9 @@ public class Autonimus extends AutoMethods {
         Trajectory shootPosition = mecanumDrive.trajectoryBuilder(dropWobbler.end())
                 .splineToConstantHeading(new Vector2d(xShoot,yShoot), Math.toRadians(0))
                 .build();
+        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition.end())
+                .splineToConstantHeading(new Vector2d(72, 0), Math.toRadians(0))
+                .build();
 
         while (!isStarted()) {
             telemetry.addData("stack ", x);
@@ -95,6 +99,14 @@ public class Autonimus extends AutoMethods {
             launcher.MovePusher(0);
             sleep(1000);
         }
+        mecanumDrive.followTrajectory(shootPosition);
+
+        wobble.wobblerClose();
+        wobble.wobblerUp();
+
+        mecanumDrive.followTrajectory(dropWobbler);
+
+
 
 
 
