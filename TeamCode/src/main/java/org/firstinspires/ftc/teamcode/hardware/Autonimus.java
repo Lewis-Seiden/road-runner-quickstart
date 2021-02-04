@@ -99,7 +99,7 @@ public class Autonimus extends AutoMethods {
             launcher.MovePusher(0);
             sleep(1000);
         }
-        mecanumDrive.followTrajectory(shootPosition);
+        mecanumDrive.followTrajectory(secondWobble);
 
         wobble.wobblerClose();
         wobble.wobblerUp();
