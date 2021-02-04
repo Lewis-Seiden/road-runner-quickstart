@@ -18,7 +18,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 //STUFF IS COMMENTED FOR TESTING, UNCOMMENT BEFORE USE
 
 @Autonomous(name="AUTO", group="Linear Opmode")
-@Disabled
+//@Disabled
 public class Autonimus extends AutoMethods {
 
     public void runOpMode() {
@@ -37,13 +37,14 @@ public class Autonimus extends AutoMethods {
         webcam.startStreaming(320,240);
         sleep(200);
         int x = testPipeline.stack;
+            x = 0; //x overide for testing
         if (x == 4) {
             x = 2;
         }
         wobble.wobblerClose();
         wobble.wobblerFull();
-        int xShoot = 72;
-        int yShoot = 50;
+        int xShoot = 30;
+        int yShoot = -22;
         Trajectory dropWobbler;
         if(x == 0) {
 
@@ -51,7 +52,7 @@ public class Autonimus extends AutoMethods {
                     .splineToConstantHeading(new Vector2d(72, 0), Math.toRadians(0))
                     .build();
         }
-        if(x == 1) {
+        else if(x == 1) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
                     .splineToConstantHeading(new Vector2d( 108, 0), Math.toRadians(0))
@@ -60,15 +61,15 @@ public class Autonimus extends AutoMethods {
         else {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(144, 1), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(144, 0), Math.toRadians(0))
                     .build();
         }
         Trajectory shootPosition = mecanumDrive.trajectoryBuilder(dropWobbler.end())
-                .splineToConstantHeading(new Vector2d(1,1), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(xShoot,yShoot), Math.toRadians(0))
                 .build();
 
         while (!isStarted()) {
-            telemetry.addData("stack", testPipeline.stack);
+            telemetry.addData("stack ", x);
             telemetry.update();
         }
 
