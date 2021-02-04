@@ -69,7 +69,7 @@ public class Autonimus extends AutoMethods {
                 .splineToConstantHeading(new Vector2d(xShoot,yShoot), Math.toRadians(0))
                 .build();
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition.end())
-                .splineToConstantHeading(new Vector2d(72, 0), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(20, -24), Math.toRadians(90).)
                 .build();
 
         while (!isStarted()) {
