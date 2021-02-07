@@ -14,8 +14,8 @@ public class Launcher {
     private Servo pusher;
     private DcMotor launcherFlywheel;
     private Telemetry telemetry;
-    private DcMotor inTake;
-    public DcMotor elevator;
+    public DcMotor inTake;
+//    public DcMotor elevator;
     public CRServo runner;
     public TouchSensor ringSensor;
     private HardwareMap hardwareMap;

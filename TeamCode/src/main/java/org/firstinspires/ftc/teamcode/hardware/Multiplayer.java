@@ -22,7 +22,7 @@ public class Multiplayer extends LinearOpMode {
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         wobbler.wobblerLifter.setTargetPosition(0);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        launcher.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        launcher.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double fineTune = 1;
         boolean ringIn = false;
         boolean endgame = false;
@@ -45,6 +45,11 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerUp();
             }
 
+            if(gamepad2.y){
+                launcher.inTake.setPower(-1);
+            } else{
+                launcher.inTake.setPower(1);
+            }
 
             if (gamepad2.right_trigger > 0.1) {
                 if (gamepad2.left_trigger > 0.1) {

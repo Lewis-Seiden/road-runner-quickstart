@@ -25,7 +25,7 @@ public class RobotDriverControl extends LinearOpMode {
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         wobbler.wobblerLifter.setTargetPosition(0);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        launcher.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        launcher.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double fineTune = 1;
 //        ElevatorMoveEventManager move = new ElevatorMoveEventManager(launcher, this);
         waitForStart();
