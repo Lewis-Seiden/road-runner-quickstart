@@ -56,7 +56,7 @@ public class Launcher {
 
     //runs the flywheel
     public void SpinFlywheel(double speed){
-        launcherFlywheel.setPower(11.5/ Voltage.getVoltage(hardwareMap) * speed);//change the number to change target voltage
+        launcherFlywheel.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);//change the number to change target voltage
     }
 
 }
