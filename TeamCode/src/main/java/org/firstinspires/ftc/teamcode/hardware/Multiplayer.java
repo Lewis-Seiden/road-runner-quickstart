@@ -19,7 +19,6 @@ public class Multiplayer extends LinearOpMode {
 
         Wobbler wobbler = new Wobbler(hardwareMap, telemetry);
         Launcher launcher = new Launcher(hardwareMap, telemetry);
-        Voltage voltage = new Voltage();
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         wobbler.wobblerLifter.setTargetPosition(0);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -46,23 +45,22 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerUp();
             }
 
-
+            if(gamepad2.y){
+                launcher.inTake.setPower(-1);
+            } else{
+                launcher.inTake.setPower(1);
+            }
 
             if (gamepad2.right_trigger > 0.1) {
                 if (gamepad2.left_trigger > 0.1) {
-                    launcher.SpinFlywheel(0.56);
+
+                    launcher.SpinFlywheel(0.6);
                 }
-                else {
-                    launcher.SpinFlywheel(1);
-                }
-                launcher.inTake.setPower(0);
+
+                launcher.SpinFlywheel(1);
             } else {
                 launcher.SpinFlywheel(0);
-                if(gamepad2.y){
-                    launcher.inTake.setPower(12.6/ Voltage.getVoltage(hardwareMap) * -1);
-                } else{
-                    launcher.inTake.setPower(12.6/ Voltage.getVoltage(hardwareMap) * 1);
-                }
+
             }
 
             if (gamepad1.left_trigger > 0.1) {
