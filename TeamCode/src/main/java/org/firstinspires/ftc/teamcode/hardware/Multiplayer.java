@@ -31,10 +31,7 @@ public class Multiplayer extends LinearOpMode {
         double fineTune = 1;
         boolean ringIn = false;
         boolean endgame = false;
-        Trajectory powerShotOne;
-        Trajectory powerShotTwo;
-        Trajectory powerShotThree;
-        SampleMecanumDrive mecanumRoadRunner = new SampleMecanumDrive(hardwareMap);
+
         waitForStart();
         start();
 //        launcher.runDaRunner(1);
@@ -97,6 +94,10 @@ public class Multiplayer extends LinearOpMode {
                 }
 
             } else if (gamepad2.right_bumper && endgame){
+                Trajectory powerShotOne;
+                Trajectory powerShotTwo;
+                Trajectory powerShotThree;
+                SampleMecanumDrive mecanumRoadRunner = new SampleMecanumDrive(hardwareMap);
                 launcher.SpinFlywheel(0.6);
                 mecanumRoadRunner.setPoseEstimate(new Pose2d());
                 powerShotOne = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
