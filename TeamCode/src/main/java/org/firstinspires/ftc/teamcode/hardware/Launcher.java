@@ -59,4 +59,5 @@ public class Launcher {
         launcherFlywheel.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);//change the number to change target voltage
     }
 
+
 }

@@ -19,7 +19,6 @@ public class Multiplayer extends LinearOpMode {
 
         Wobbler wobbler = new Wobbler(hardwareMap, telemetry);
         Launcher launcher = new Launcher(hardwareMap, telemetry);
-        Voltage voltage = new Voltage();
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         wobbler.wobblerLifter.setTargetPosition(0);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -46,25 +45,26 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerUp();
             }
 
-
-
-            if (gamepad2.right_trigger > 0.1) {
-                if (gamepad2.left_trigger > 0.1) {
-                    launcher.SpinFlywheel(0.56);
-                }
-                else {
-                    launcher.SpinFlywheel(1);
-                }
-                launcher.inTake.setPower(0);
-            } else {
-                launcher.SpinFlywheel(0);
-                if(gamepad2.y){
-                    launcher.inTake.setPower(12.6/ Voltage.getVoltage(hardwareMap) * -1);
-                } else{
-                    launcher.inTake.setPower(12.6/ Voltage.getVoltage(hardwareMap) * 1);
-                }
+            if(gamepad2.y){
+                launcher.inTake.setPower(-1);
+            } else{
+                launcher.inTake.setPower(1);
             }
 
+            if (gamepad2.right_trigger > 0.1 && !endgame) {
+                if (gamepad2.left_trigger > 0.1) {
+
+                    launcher.SpinFlywheel(0.6);
+                }
+
+                launcher.SpinFlywheel(1);
+            } else {
+                launcher.SpinFlywheel(0);
+
+            }
+            if (gamepad2.right_trigger > 0.1 && endgame) {
+                launcher.SpinFlywheel(0.6);
+            }
             if (gamepad1.left_trigger > 0.1) {
                 fineTune = 3;
             } else {
@@ -73,9 +73,11 @@ public class Multiplayer extends LinearOpMode {
 
             if (gamepad2.dpad_right || gamepad2.dpad_left || gamepad2.dpad_down || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down ){
                 endgame = true;
+
             } else if (gamepad2.dpad_up || gamepad1.dpad_up){
                 endgame = false;
             }
+            telemetry.addLine("isEndgame: " + endgame);
             if (gamepad2.right_bumper && !endgame) {
                 mecanumDrive.SetPowerMecanum(0,0,0,1);
                 for(int i = 0; i < 3; i++) {
