@@ -45,8 +45,9 @@ public class Autonimus extends AutoMethods {
         wobble.wobblerClose();
         wobble.wobblerFull();
         int xShoot = 30;
-        int yShoot = -22;
+        int yShoot = -18;
         Trajectory dropWobbler;
+        Trajectory dropSecondWobbler;
         if(x == 0) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
@@ -66,12 +67,35 @@ public class Autonimus extends AutoMethods {
                     .build();
         }
         //make dropwobbler2 from secondwobbler.end
-        Trajectory shootPosition = mecanumDrive.trajectoryBuilder(dropWobbler.end())
-                .splineToConstantHeading(new Vector2d(xShoot,yShoot), Math.toRadians(0))
+        Trajectory shootPosition = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
+                .splineToLinearHeading(new Pose2d(xShoot,yShoot, 20), Math.toRadians(0))
                 .build();
-        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition.end())
-                .splineToLinearHeading(new Pose2d(25, -48, Math.toRadians(90)), Math.toRadians(0))
+        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition.end(),true)
+                .splineToLinearHeading(new Pose2d(25, -20, Math.toRadians(90)), Math.toRadians(0))
                 .build();
+
+        if(x == 0) {
+//set up second wobble drop
+            dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
+                    .splineToConstantHeading(new Vector2d(72, -5), Math.toRadians(0))
+                    .build();
+        }
+        else if(x == 1) {
+
+            dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
+                    .splineToConstantHeading(new Vector2d( 108, -5), Math.toRadians(0))
+                    .build();
+        }
+        else {
+
+            dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
+                    .splineToConstantHeading(new Vector2d(144, -5), Math.toRadians(0))
+                    .build();
+        }
+        Trajectory endPosition = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end())
+                .splineToConstantHeading(new Vector2d(72, -20), Math.toRadians(0))
+                .build();
+
 
         while (!isStarted()) {
             telemetry.addData("stack ", x);
@@ -104,8 +128,13 @@ public class Autonimus extends AutoMethods {
 
         wobble.wobblerClose();
         wobble.wobblerUp();
+        sleep(500);
 
-        mecanumDrive.followTrajectory(dropWobbler);
+        mecanumDrive.followTrajectory(dropSecondWobbler);
+        wobble.wobblerDown();
+        wobble.wobblerOpen();
+        sleep(500);
 
+        mecanumDrive.followTrajectory(endPosition);
    }
 }
