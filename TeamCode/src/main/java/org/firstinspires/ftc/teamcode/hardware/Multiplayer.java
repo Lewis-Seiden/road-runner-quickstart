@@ -1,8 +1,13 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @TeleOp(name="TELEOP2P", group="Linear Opmode")
 public class Multiplayer extends LinearOpMode {
@@ -26,6 +31,10 @@ public class Multiplayer extends LinearOpMode {
         double fineTune = 1;
         boolean ringIn = false;
         boolean endgame = false;
+        Trajectory powerShotOne;
+        Trajectory powerShotTwo;
+        Trajectory powerShotThree;
+        SampleMecanumDrive mecanumRoadRunner = new SampleMecanumDrive(hardwareMap);
         waitForStart();
         start();
 //        launcher.runDaRunner(1);
@@ -88,7 +97,34 @@ public class Multiplayer extends LinearOpMode {
                 }
 
             } else if (gamepad2.right_bumper && endgame){
-                launcher.MovePusher(0.2);
+                launcher.SpinFlywheel(0.6);
+                mecanumRoadRunner.setPoseEstimate(new Pose2d());
+                powerShotOne = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
+                        .splineToConstantHeading(new Vector2d(0, 15), Math.toRadians(0))
+                        .build();
+                launcher.MovePusher(0.3);
+                sleep(400);
+                launcher.MovePusher(0);
+                sleep(400);
+                mecanumRoadRunner.setPoseEstimate(new Pose2d());
+                powerShotTwo = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
+                        .splineToConstantHeading(new Vector2d(0, 22.5), Math.toRadians(0))
+                        .build();
+                launcher.MovePusher(0.3);
+                sleep(400);
+                launcher.MovePusher(0);
+                sleep(400);
+                mecanumRoadRunner.setPoseEstimate(new Pose2d());
+                powerShotThree = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
+                        .splineToConstantHeading(new Vector2d(0, 30), Math.toRadians(0))
+                        .build();
+                launcher.MovePusher(0.3);
+                sleep(400);
+                launcher.MovePusher(0);
+                sleep(400);
+
+
+                mecanumRoadRunner.followTrajectory(powerShotOne);
             } else {
                 launcher.MovePusher(0);
 //                telemetry.addLine("Shooter pusher not pushing");
