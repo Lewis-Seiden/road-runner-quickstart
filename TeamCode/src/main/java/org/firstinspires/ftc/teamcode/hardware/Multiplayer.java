@@ -51,7 +51,7 @@ public class Multiplayer extends LinearOpMode {
                 launcher.inTake.setPower(1);
             }
 
-            if (gamepad2.right_trigger > 0.1) {
+            if (gamepad2.right_trigger > 0.1 && !endgame) {
                 if (gamepad2.left_trigger > 0.1) {
 
                     launcher.SpinFlywheel(0.6);
@@ -62,7 +62,9 @@ public class Multiplayer extends LinearOpMode {
                 launcher.SpinFlywheel(0);
 
             }
-
+            if (gamepad2.right_trigger > 0.1 && endgame) {
+                launcher.SpinFlywheel(0.6);
+            }
             if (gamepad1.left_trigger > 0.1) {
                 fineTune = 3;
             } else {
@@ -71,9 +73,11 @@ public class Multiplayer extends LinearOpMode {
 
             if (gamepad2.dpad_right || gamepad2.dpad_left || gamepad2.dpad_down || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down ){
                 endgame = true;
+
             } else if (gamepad2.dpad_up || gamepad1.dpad_up){
                 endgame = false;
             }
+            telemetry.addLine("isEndgame: " + endgame);
             if (gamepad2.right_bumper && !endgame) {
                 mecanumDrive.SetPowerMecanum(0,0,0,1);
                 for(int i = 0; i < 3; i++) {
