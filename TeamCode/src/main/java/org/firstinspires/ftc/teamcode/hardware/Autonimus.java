@@ -44,14 +44,14 @@ public class Autonimus extends AutoMethods {
         }
         wobble.wobblerClose();
         wobble.wobblerFull();
-        int xShoot = 30;
-        int yShoot = -18;
+        int xShoot = 33;
+        int yShoot = -14;
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
         if(x == 0) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(72, -5), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(72, 0), Math.toRadians(0))
                     .build();
         }
         else if(x == 1) {
@@ -68,16 +68,19 @@ public class Autonimus extends AutoMethods {
         }
         //make dropwobbler2 from secondwobbler.end
         Trajectory shootPosition = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
-                .splineToLinearHeading(new Pose2d(xShoot,yShoot, 20), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot,yShoot, Math.toRadians(-7)), Math.toRadians(0))
                 .build();
-        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition.end(),true)
-                .splineToLinearHeading(new Pose2d(25, -20, Math.toRadians(90)), Math.toRadians(0))
+        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition.end(),false)
+                .splineToLinearHeading(new Pose2d(37, -22, Math.toRadians(60)), Math.toRadians(0))
+                .build();
+        Trajectory secondWobblePt2 = mecanumDrive.trajectoryBuilder(secondWobble.end(), true)
+                .splineToLinearHeading(new Pose2d(23.5, -25.5, Math.toRadians(90)), Math.toRadians(0))
                 .build();
 
         if(x == 0) {
 //set up second wobble drop
-            dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
-                    .splineToConstantHeading(new Vector2d(72, -5), Math.toRadians(0))
+            dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobblePt2.end())
+                    .splineToLinearHeading(new Pose2d(72, -10, Math.toRadians(0)), Math.toRadians(0))
                     .build();
         }
         else if(x == 1) {
@@ -112,12 +115,12 @@ public class Autonimus extends AutoMethods {
         wobble.wobblerOpen();
         wobble.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(500);
-
+        launcher.SpinFlywheel(1);
         mecanumDrive.followTrajectory(shootPosition);
 
         //spin up shooter, and then shoot
-        launcher.SpinFlywheel(1);
-        sleep(1000);
+
+        sleep(2000);
         for (int i = 0; i < 3; i++) {
             launcher.MovePusher(0.2);
             sleep(1000);
@@ -125,7 +128,8 @@ public class Autonimus extends AutoMethods {
             sleep(1000);
         }
         mecanumDrive.followTrajectory(secondWobble);
-
+        mecanumDrive.followTrajectory(secondWobblePt2);
+        sleep(1000);
         wobble.wobblerClose();
         wobble.wobblerUp();
         sleep(500);
