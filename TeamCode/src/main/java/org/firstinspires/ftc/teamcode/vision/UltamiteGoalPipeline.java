@@ -11,19 +11,19 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class UltamiteGoalPipeline extends OpenCvPipeline {
     public double threshold;
-    public double x1BottomRectangle = 155;
+    public double x1BottomRectangle = 156;
     public double y1BottomRectangle = 11;
-    public double x2BottomRectangle = 159;
-    public double y2BottomRectangle = 39;
+    public double x2BottomRectangle = 161;
+    public double y2BottomRectangle = 28;
     /*coordinates that check for the bottom ring.
     You can find the values by running VisionTester.
     x1 is what x is, x2 is x plus width, y1 is what y is y2 is y plus height.
     Round down when adding
      */
-    public double x1TopRectangle = 137;
-    public double y1TopRectangle = 23;
-    public double x2TopRectangle = 156;
-    public double y2TopRectangle = 45;
+    public double x1TopRectangle = 136;
+    public double y1TopRectangle = 3;
+    public double x2TopRectangle = 145;
+    public double y2TopRectangle = 30;
     //coordinates of the box that checks for the top three rings. Find coordinates in same way as bottom rectangle
     public double thresholdLow = 7;
     public double thresholdHigh = 16;

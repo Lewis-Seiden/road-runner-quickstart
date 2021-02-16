@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Disabled
+//@Disabled
 @TeleOp(name = "vision test", group = "TeleOp")
 public class VisionTester extends LinearOpMode {
     public void runOpMode () {

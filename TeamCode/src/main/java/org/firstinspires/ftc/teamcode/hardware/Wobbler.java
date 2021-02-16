@@ -43,7 +43,7 @@ public class Wobbler {
     public void wobblerDown(){
         if(wobblerLifter.getCurrentPosition() > 10) {
             wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() + 10);
-            wobblerLifter.setPower(0.3);
+            wobblerLifter.setPower(1);
         }
 //        telemetry.addLine("Wobbler down function called.");
     }
@@ -63,7 +63,7 @@ public class Wobbler {
         if(wobblerLifter.getCurrentPosition() > -6000) {
             wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() + -10);
             wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobblerLifter.setPower(-0.3);
+            wobblerLifter.setPower(-1);
 //        telemetry.addLine("Wobbler up function called.");
             telemetry.update();
         }

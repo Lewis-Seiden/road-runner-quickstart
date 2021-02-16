@@ -45,14 +45,14 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerOpenDC();
 //                telemetry.addLine("Wobbler Opening");
             }
-            if (gamepad2.left_stick_y > 0.05) {
+            if (gamepad2.left_stick_y > -0.05) {
                 wobbler.wobblerDown();
-            } else if (gamepad2.left_stick_y < -0.05) {
+            } else if (gamepad2.left_stick_y < 0.05) {
                 wobbler.wobblerUp();
             }
 
             if(gamepad2.y){
-                launcher.inTake.setPower(-1);
+                launcher.inTake.setPower(0);
             } else{
                 launcher.inTake.setPower(1);
             }
@@ -69,12 +69,16 @@ public class Multiplayer extends LinearOpMode {
 
             }
             if (gamepad2.right_trigger > 0.1 && endgame) {
-                launcher.SpinFlywheel(0.6);
+                launcher.SpinFlywheel(0.9);
             }
+
             if (gamepad1.left_trigger > 0.1) {
                 fineTune = 3;
             } else {
                 fineTune = 1;
+            }
+            if (gamepad2.left_trigger > 0.1) {
+                launcher.inTake.setPower(-0.25);
             }
 
             if (gamepad2.dpad_right || gamepad2.dpad_left || gamepad2.dpad_down || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down ){
@@ -93,43 +97,16 @@ public class Multiplayer extends LinearOpMode {
                     sleep(400);
                 }
 
-            } else if (gamepad2.right_bumper && endgame){
-                Trajectory powerShotOne;
-                Trajectory powerShotTwo;
-                Trajectory powerShotThree;
-                SampleMecanumDrive mecanumRoadRunner = new SampleMecanumDrive(hardwareMap);
-                launcher.SpinFlywheel(0.6);
-                mecanumRoadRunner.setPoseEstimate(new Pose2d());
-                powerShotOne = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
-                        .splineToConstantHeading(new Vector2d(0, 15), Math.toRadians(0))
-                        .build();
-                launcher.MovePusher(0.3);
-                sleep(400);
-                launcher.MovePusher(0);
-                sleep(400);
-                mecanumRoadRunner.setPoseEstimate(new Pose2d());
-                powerShotTwo = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
-                        .splineToConstantHeading(new Vector2d(0, 22.5), Math.toRadians(0))
-                        .build();
-                launcher.MovePusher(0.3);
-                sleep(400);
-                launcher.MovePusher(0);
-                sleep(400);
-                mecanumRoadRunner.setPoseEstimate(new Pose2d());
-                powerShotThree = mecanumRoadRunner.trajectoryBuilder(new Pose2d())
-                        .splineToConstantHeading(new Vector2d(0, 30), Math.toRadians(0))
-                        .build();
-                launcher.MovePusher(0.3);
-                sleep(400);
-                launcher.MovePusher(0);
-                sleep(400);
-
-
-                mecanumRoadRunner.followTrajectory(powerShotOne);
-            } else {
-                launcher.MovePusher(0);
-//                telemetry.addLine("Shooter pusher not pushing");
             }
+            if (gamepad2.right_bumper && endgame) {
+                launcher.MovePusher(0.3);
+                sleep(400);
+                launcher.MovePusher(0);
+            }
+
+
+
+
 
 
 
