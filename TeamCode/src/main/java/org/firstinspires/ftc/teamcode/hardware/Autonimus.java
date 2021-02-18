@@ -29,25 +29,32 @@ public class Autonimus extends AutoMethods {
         launcher = new Launcher(hardwareMap, telemetry);
         boolean pwrShots = false; //true = go for pwr shots, false = go for high goal
         wobble.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-//        OpenCvWebcam webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
-//        UltamiteGoalPipeline testPipeline = new UltamiteGoalPipeline();
-//        webcam.setPipeline(testPipeline);
-//        webcam.openCameraDevice();
-//        webcam.startStreaming(320,240);
-//        sleep(200);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        OpenCvWebcam webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
+        UltamiteGoalPipeline testPipeline = new UltamiteGoalPipeline();
+        webcam.setPipeline(testPipeline);
+        webcam.openCameraDevice();
+        webcam.startStreaming(320,240);
+        sleep(1000);
 
-//        int x = testPipeline.stack;
-//            x = 0; //x overide for testing
-//        if (x == 4) {
-//            x = 2;
-//        }
-        int x = 1;
+
+        int x = testPipeline.stack;
+           // int x=2;
+        if (x == 4) {
+            x = 2;
+        }
+
         int twoRingPickUpX = 0;
         double twoRingPickUpY = 0;
         if(x == 1){
              twoRingPickUpX = 23;
              twoRingPickUpY = -20.5;
+        }
+        else if (x == 2)
+        {
+
+            twoRingPickUpX = 23;
+            twoRingPickUpY = -15;
         }
         else {
              twoRingPickUpX = 25;
@@ -64,6 +71,7 @@ public class Autonimus extends AutoMethods {
         Trajectory dropSecondWobbler;
 
         launcher.SpinFlywheel(1);
+        wobble.wobblerUp();
 
         if(x == 0) {
 
@@ -80,7 +88,7 @@ public class Autonimus extends AutoMethods {
         else {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(144, -5), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(120, 0), Math.toRadians(0))
                     .build();
         }
         //make dropwobbler2 from secondwobbler.end
@@ -112,12 +120,12 @@ public class Autonimus extends AutoMethods {
         else {
 
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(144, -5), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(115, -5), Math.toRadians(0))
                     .build();
         }
 
         Trajectory endPosition = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end())
-                .splineToConstantHeading(new Vector2d(72, -30), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(0))
                 .build();
 
 
@@ -126,13 +134,12 @@ public class Autonimus extends AutoMethods {
             telemetry.update();
         }
 
-//        webcam.stopStreaming();
-//            webcam.closeCameraDevice();
-
-
-        mecanumDrive.followTrajectory(dropWobbler);
+        webcam.stopStreaming();
+            webcam.closeCameraDevice();
 
         wobble.wobblerDown();
+        mecanumDrive.followTrajectory(dropWobbler);
+
         wobble.wobblerOpen();
         wobble.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(500);
@@ -143,13 +150,13 @@ public class Autonimus extends AutoMethods {
         sleep(1000);
         mecanumDrive.followTrajectory(shootPosition2);
         launcher.MovePusher(0.2);
-        sleep(1000);
+        sleep(700);
         launcher.MovePusher(0);
-        sleep(1000);
+        sleep(700);
         launcher.MovePusher(0.2);
-        sleep(1000);
+        sleep(700);
         launcher.MovePusher(0);
-        sleep(1000);
+        sleep(700);
 
         //spin up shooter, and then shoot
 

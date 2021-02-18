@@ -11,19 +11,19 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class UltamiteGoalPipeline extends OpenCvPipeline {
     public double threshold;
-    public double x1BottomRectangle = 156;
-    public double y1BottomRectangle = 11;
-    public double x2BottomRectangle = 161;
-    public double y2BottomRectangle = 28;
+    public double x1BottomRectangle = 155;
+    public double y1BottomRectangle = 9;
+    public double x2BottomRectangle = 159;
+    public double y2BottomRectangle = 30;
     /*coordinates that check for the bottom ring.
     You can find the values by running VisionTester.
     x1 is what x is, x2 is x plus width, y1 is what y is y2 is y plus height.
     Round down when adding
      */
-    public double x1TopRectangle = 136;
-    public double y1TopRectangle = 3;
-    public double x2TopRectangle = 145;
-    public double y2TopRectangle = 30;
+    public double x1TopRectangle = 132;
+    public double y1TopRectangle = 9;
+    public double x2TopRectangle = 151;
+    public double y2TopRectangle = 27;
     //coordinates of the box that checks for the top three rings. Find coordinates in same way as bottom rectangle
     public double thresholdLow = 7;
     public double thresholdHigh = 16;
@@ -37,6 +37,8 @@ public class UltamiteGoalPipeline extends OpenCvPipeline {
         Imgproc.cvtColor(input, convertedMat, Imgproc.COLOR_RGB2HSV);
         Scalar meanTopRect = Core.mean(convertedMat.submat(new Rect(new Point(x1TopRectangle, y1TopRectangle), new Point(x2TopRectangle, y2TopRectangle))));
         Scalar meanBottomRect = Core.mean(convertedMat.submat(new Rect(new Point(x1BottomRectangle, y1BottomRectangle), new Point(x2BottomRectangle, y2BottomRectangle))));
+        Imgproc.rectangle(input, new Rect(new Point(x1TopRectangle, y1TopRectangle), new Point(x2TopRectangle, y2TopRectangle)) ,new Scalar(255, 255, 255));
+        Imgproc.rectangle(input, new Rect(new Point(x1BottomRectangle, y1BottomRectangle), new Point(x2BottomRectangle, y2BottomRectangle)) ,new Scalar(255,255,255));
         // gets average hsv value for rectangle
         if(checkThreshold(meanTopRect.val[0])){
             stack = 4;

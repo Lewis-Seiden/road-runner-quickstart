@@ -18,7 +18,7 @@ public class TestUltamiteGoalPipeline extends LinearOpMode {
         webcam.setPipeline(testPipeline);
         webcam.openCameraDevice();
         webcam.startStreaming(320,240);
-        //opens camera and gets it ready I think
+        //opens camera and gets it ready
         while (!isStopRequested()) {
             telemetry.addData("stack", testPipeline.stack);
             telemetry.update();

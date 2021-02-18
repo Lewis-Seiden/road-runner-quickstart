@@ -41,10 +41,11 @@ public class Wobbler {
 
     //robot grabs the wobbler
     public void wobblerDown(){
-        if(wobblerLifter.getCurrentPosition() > 10) {
-            wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() + 10);
+
+            wobblerLifter.setTargetPosition(1);
+            wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wobblerLifter.setPower(1);
-        }
+
 //        telemetry.addLine("Wobbler down function called.");
     }
     //wobbler gets put down
@@ -60,13 +61,12 @@ public class Wobbler {
     }
     public void wobblerUp() {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
-        if(wobblerLifter.getCurrentPosition() > -6000) {
-            wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() + -10);
-            wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobblerLifter.setPower(-1);
+        wobblerLifter.setTargetPosition(-2848);
+        wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wobblerLifter.setPower(1);
+
 //        telemetry.addLine("Wobbler up function called.");
-            telemetry.update();
-        }
+
 //        t.addLine(encoder.pos);
 
     }
@@ -83,6 +83,7 @@ public class Wobbler {
          telemetry.update();
 
     }
+
 
 
 }
