@@ -44,7 +44,7 @@ public class Wobbler {
 
             wobblerLifter.setTargetPosition(1);
             wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobblerLifter.setPower(1);
+            wobblerLifter.setPower(0.5);
 
 //        telemetry.addLine("Wobbler down function called.");
     }
@@ -63,7 +63,7 @@ public class Wobbler {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
         wobblerLifter.setTargetPosition(-2848);
         wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wobblerLifter.setPower(1);
+        wobblerLifter.setPower(0.5);
 
 //        telemetry.addLine("Wobbler up function called.");
 

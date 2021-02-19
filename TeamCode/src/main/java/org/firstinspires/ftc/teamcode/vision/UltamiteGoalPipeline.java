@@ -25,7 +25,7 @@ public class UltamiteGoalPipeline extends OpenCvPipeline {
     public double x2TopRectangle = 151;
     public double y2TopRectangle = 27;
     //coordinates of the box that checks for the top three rings. Find coordinates in same way as bottom rectangle
-    public double thresholdLow = 7;
+    public double thresholdLow = 0;
     public double thresholdHigh = 16;
     //the two values that the hsv mean of the rings fall between. You can see the hsv mean by running vision tester.
     public int stack;

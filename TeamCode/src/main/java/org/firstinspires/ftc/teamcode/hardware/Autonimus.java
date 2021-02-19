@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -35,7 +36,7 @@ public class Autonimus extends AutoMethods {
         webcam.setPipeline(testPipeline);
         webcam.openCameraDevice();
         webcam.startStreaming(320,240);
-        sleep(1000);
+        sleep(10000);
 
 
         int x = testPipeline.stack;
@@ -57,7 +58,7 @@ public class Autonimus extends AutoMethods {
             twoRingPickUpY = -15;
         }
         else {
-             twoRingPickUpX = 25;
+             twoRingPickUpX = 24;
              twoRingPickUpY = -20.0;
 
 
@@ -65,12 +66,11 @@ public class Autonimus extends AutoMethods {
 
         wobble.wobblerClose();
         wobble.wobblerFull();
-        int xShoot = 37;
+        int xShoot = 38;
         int yShoot = -14;
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
 
-        launcher.SpinFlywheel(1);
         wobble.wobblerUp();
 
         if(x == 0) {
@@ -93,16 +93,16 @@ public class Autonimus extends AutoMethods {
         }
         //make dropwobbler2 from secondwobbler.end
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
-                .splineToLinearHeading(new Pose2d(xShoot + 2,yShoot, Math.toRadians(-7)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot + 1,yShoot, Math.toRadians(-7)), Math.toRadians(180))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(shootPosition1.end(), true)
-                .splineToLinearHeading(new Pose2d(xShoot,yShoot, Math.toRadians(-7)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot,yShoot, Math.toRadians(-7)), Math.toRadians(180))
                 .build();
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end(),false)
-                .splineToLinearHeading(new Pose2d(37, -22, Math.toRadians(60)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(37, -22, Math.toRadians(60)), Math.toRadians(180))
                 .build();
         Trajectory secondWobblePt2 = mecanumDrive.trajectoryBuilder(secondWobble.end(), true)
-                .splineToLinearHeading(new Pose2d(twoRingPickUpX, twoRingPickUpY, Math.toRadians(90)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(twoRingPickUpX, twoRingPickUpY, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
         if(x == 0) {
@@ -125,7 +125,7 @@ public class Autonimus extends AutoMethods {
         }
 
         Trajectory endPosition = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end())
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
                 .build();
 
 
@@ -139,7 +139,7 @@ public class Autonimus extends AutoMethods {
 
         wobble.wobblerDown();
         mecanumDrive.followTrajectory(dropWobbler);
-
+        launcher.SpinFlywheel(1);
         wobble.wobblerOpen();
         wobble.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(500);
@@ -148,7 +148,7 @@ public class Autonimus extends AutoMethods {
         sleep(1000);
         launcher.MovePusher(0);
         sleep(1000);
-        mecanumDrive.followTrajectory(shootPosition2);
+        //mecanumDrive.followTrajectory(shootPosition2);
         launcher.MovePusher(0.2);
         sleep(700);
         launcher.MovePusher(0);
@@ -166,7 +166,6 @@ public class Autonimus extends AutoMethods {
         mecanumDrive.followTrajectory(secondWobblePt2);
         sleep(1000);
         wobble.wobblerClose();
-        wobble.wobblerUp();
         sleep(500);
 
         mecanumDrive.followTrajectory(dropSecondWobbler);

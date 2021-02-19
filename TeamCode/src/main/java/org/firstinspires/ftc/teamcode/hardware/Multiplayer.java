@@ -81,12 +81,20 @@ public class Multiplayer extends LinearOpMode {
                 launcher.inTake.setPower(-0.25);
             }
 
-            if (gamepad2.dpad_right || gamepad2.dpad_left || gamepad2.dpad_down || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down ){
+            if (gamepad2.dpad_right){
                 endgame = true;
 
-            } else if (gamepad2.dpad_up || gamepad1.dpad_up){
+            } else if (gamepad2.dpad_left || gamepad1.dpad_left){
                 endgame = false;
             }
+            if(gamepad2.dpad_up) {
+                wobbler.wobblerUp();
+            }
+            if(gamepad2.dpad_down)
+            {
+                wobbler.wobblerDown();
+            }
+
             telemetry.addLine("isEndgame: " + endgame);
             if (gamepad2.right_bumper && !endgame) {
                 mecanumDrive.SetPowerMecanum(0,0,0,1);
