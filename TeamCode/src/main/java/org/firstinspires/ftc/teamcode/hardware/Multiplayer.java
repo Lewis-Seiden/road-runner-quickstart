@@ -45,16 +45,18 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerOpenDC();
 //                telemetry.addLine("Wobbler Opening");
             }
-            if (gamepad2.left_stick_y > -0.05) {
+            if (gamepad2.left_stick_y > 0.05) {
                 wobbler.wobblerDown();
-            } else if (gamepad2.left_stick_y < 0.05) {
+            } else if (gamepad2.left_stick_y < -0.05) {
                 wobbler.wobblerUp();
             }
 
-            if(gamepad2.y){
+            if(gamepad2.y || gamepad2.right_trigger > 0.1 || endgame){
                 launcher.inTake.setPower(0);
+                launcher.inTake2.setPower(0);
             } else{
                 launcher.inTake.setPower(1);
+                launcher.inTake2.setPower(1);
             }
 
             if (gamepad2.right_trigger > 0.1 && !endgame) {
@@ -62,8 +64,10 @@ public class Multiplayer extends LinearOpMode {
 
                     launcher.SpinFlywheel(0.6);
                 }
+                else {
+                    launcher.SpinFlywheel(1);
+                }
 
-                launcher.SpinFlywheel(1);
             } else {
                 launcher.SpinFlywheel(0);
 
@@ -71,28 +75,22 @@ public class Multiplayer extends LinearOpMode {
             if (gamepad2.right_trigger > 0.1 && endgame) {
                 launcher.SpinFlywheel(0.9);
             }
-
             if (gamepad1.left_trigger > 0.1) {
                 fineTune = 3;
             } else {
                 fineTune = 1;
             }
-            if (gamepad2.left_trigger > 0.1) {
-                launcher.inTake.setPower(-0.25);
-            }
 
-            if (gamepad2.dpad_right){
+            if (gamepad2.dpad_right || gamepad2.dpad_left || gamepad2.dpad_down || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down ){
                 endgame = true;
 
-            } else if (gamepad2.dpad_left || gamepad1.dpad_left){
+            } else if (gamepad2.dpad_up || gamepad1.dpad_up){
                 endgame = false;
             }
-            if(gamepad2.dpad_up) {
-                wobbler.wobblerUp();
-            }
-            if(gamepad2.dpad_down)
-            {
-                wobbler.wobblerDown();
+            if(endgame && gamepad2.right_trigger > 0.1) {
+                launcher.inTake.setPower(0);
+                launcher.inTake2.setPower(0);
+
             }
 
             telemetry.addLine("isEndgame: " + endgame);
@@ -105,14 +103,17 @@ public class Multiplayer extends LinearOpMode {
                     sleep(400);
                 }
 
-            }
-            if (gamepad2.right_bumper && endgame) {
+            } else if (gamepad2.right_bumper && endgame) {
                 launcher.MovePusher(0.3);
                 sleep(400);
                 launcher.MovePusher(0);
             }
 
 
+             else {
+                launcher.MovePusher(0);
+//                telemetry.addLine("Shooter pusher not pushing");
+            }
 
 
 

@@ -15,6 +15,7 @@ public class Launcher {
     private DcMotor launcherFlywheel;
     private Telemetry telemetry;
     public DcMotor inTake;
+    public DcMotor inTake2;
 //    public DcMotor elevator;
     public CRServo runner;
     public TouchSensor ringSensor;
@@ -27,6 +28,7 @@ public class Launcher {
         launcherFlywheel = hardwareMap.get(DcMotor.class, "launcher_flywheel");
         pusher = hardwareMap.get(Servo.class, "pusher");
         inTake = hardwareMap.get(DcMotor.class, "intake");
+        inTake2 = hardwareMap.get(DcMotor.class, "intake2");
 
         pusher.setDirection(Servo.Direction.REVERSE);
         runner = hardwareMap.get(CRServo.class, "roller");
@@ -57,6 +59,12 @@ public class Launcher {
     //runs the flywheel
     public void SpinFlywheel(double speed){
         launcherFlywheel.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);//change the number to change target voltage
+    }
+    public void inTakeRun (double speed)
+    {
+        inTake.setPower(12/ Voltage.getVoltage(hardwareMap)* speed);
+        inTake2.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);
+
     }
 
 
