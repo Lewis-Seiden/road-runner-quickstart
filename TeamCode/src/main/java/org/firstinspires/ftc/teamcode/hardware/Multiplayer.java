@@ -52,8 +52,8 @@ public class Multiplayer extends LinearOpMode {
             }
 
             if(gamepad2.y || gamepad2.right_trigger > 0.1 || endgame){
-                launcher.inTake.setPower(0);
-                launcher.inTake2.setPower(0);
+                launcher.inTake.setPower(-1);
+                launcher.inTake2.setPower(-1);
             } else{
                 launcher.inTake.setPower(1);
                 launcher.inTake2.setPower(1);
