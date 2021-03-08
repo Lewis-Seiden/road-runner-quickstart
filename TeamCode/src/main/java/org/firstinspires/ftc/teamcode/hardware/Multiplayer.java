@@ -69,7 +69,7 @@ public class Multiplayer extends LinearOpMode {
                 }
 
             } else {
-                launcher.SpinFlywheel(0);
+                launcher.SpinFlywheel(0.5);
 
             }
             if (gamepad2.right_trigger > 0.1 && endgame) {

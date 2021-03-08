@@ -72,6 +72,7 @@ public class Autonimus extends AutoMethods {
         Trajectory dropSecondWobbler;
 
         wobble.wobblerUp();
+        launcher.intakeFlipperRun(0);
 
         if(x == 0) {
 
@@ -117,6 +118,7 @@ public class Autonimus extends AutoMethods {
                     .splineToConstantHeading(new Vector2d(96, -34), Math.toRadians(0))
                     .build();
         }
+        //lol
         else {
 
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
@@ -174,5 +176,8 @@ public class Autonimus extends AutoMethods {
         sleep(500);
 
         mecanumDrive.followTrajectory(endPosition);
+        launcher.intakeFlipperRun(-1);
+
+
    }
 }

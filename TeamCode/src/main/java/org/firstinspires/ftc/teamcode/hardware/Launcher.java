@@ -20,6 +20,7 @@ public class Launcher {
     public CRServo runner;
     public TouchSensor ringSensor;
     private HardwareMap hardwareMap;
+    public Servo intakeFlipper;
     //private Servo push1;
     //private Servo push2;
 
@@ -33,6 +34,7 @@ public class Launcher {
         pusher.setDirection(Servo.Direction.REVERSE);
         runner = hardwareMap.get(CRServo.class, "roller");
         ringSensor = hardwareMap.get(TouchSensor.class, "ring_sensor");
+        intakeFlipper = hardwareMap.get(Servo.class, "intakeFlipper");
         //push1 = hardwareMap.get(Servo.class, "push1");
         //push2 = hardwareMap.get(Servo.class, "push2");
 
@@ -65,6 +67,10 @@ public class Launcher {
         inTake.setPower(12/ Voltage.getVoltage(hardwareMap)* speed);
         inTake2.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);
 
+    }
+    public void intakeFlipperRun (double location)
+    {
+        intakeFlipper.setPosition(location);
     }
 
 
