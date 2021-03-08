@@ -29,6 +29,7 @@ public class Multiplayer extends LinearOpMode {
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        launcher.elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         double fineTune = 1;
+        boolean wobbleOpen = true;
         boolean ringIn = false;
         boolean endgame = false;
 
@@ -39,13 +40,15 @@ public class Multiplayer extends LinearOpMode {
             mecanumDrive.SetPowerMecanum(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, fineTune);
             if (gamepad2.b) {
                 wobbler.wobblerClose();
+                wobbleOpen = false;
 //                telemetry.addLine("Wobbler Closeing");
             }
             if (gamepad2.a) {
                 wobbler.wobblerOpenDC();
+                wobbleOpen = true;
 //                telemetry.addLine("Wobbler Opening");
             }
-            if (gamepad2.left_stick_y > 0.05) {
+            if (gamepad2.left_stick_y > 0.05 && !wobbleOpen) {
                 wobbler.wobblerDown();
             } else if (gamepad2.left_stick_y < -0.05) {
                 wobbler.wobblerUp();
