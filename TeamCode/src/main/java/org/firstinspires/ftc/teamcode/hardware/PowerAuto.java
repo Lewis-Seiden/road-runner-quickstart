@@ -50,6 +50,18 @@ public class PowerAuto extends AutoMethods {
         Trajectory dropSecondWobbler;
 
         wobble.wobblerUp();
+        launcher.intakeFlipperRun(0);
+        int y = 0;
+
+
+        if(x == 0)
+        {
+            y = 0;
+        }
+        else if (x == 2)
+        {
+            y = 5;
+        }
 
         if(x == 0) {
 
@@ -71,13 +83,13 @@ public class PowerAuto extends AutoMethods {
         }
         //make dropwobbler2 from secondwobbler.end
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end())
-                .lineToLinearHeading(new Pose2d(58,-34.5, Math.toRadians(-7)))
+                .lineToLinearHeading(new Pose2d(58,-34.5 + y, Math.toRadians(-7)))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(shootPosition1.end())
-                .lineToLinearHeading(new Pose2d(58,-43, Math.toRadians(-10)))
+                .lineToLinearHeading(new Pose2d(58,-43 +  y, Math.toRadians(-10)))
                 .build();
         Trajectory shootPosition3 = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .lineToLinearHeading(new Pose2d(58,-52.5, Math.toRadians(-10)))
+                .lineToLinearHeading(new Pose2d(58,-52.5 + y, Math.toRadians(-10)))
                 .build();
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition3.end(),true)
                 .splineToLinearHeading(new Pose2d(25, -19, Math.toRadians(90)), Math.toRadians(180))
@@ -147,5 +159,6 @@ public class PowerAuto extends AutoMethods {
         sleep(500);
 
         mecanumDrive.followTrajectory(endPosition);
+        launcher.intakeFlipperRun(-1);
     }
 }

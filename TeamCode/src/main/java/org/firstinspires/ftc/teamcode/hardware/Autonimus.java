@@ -40,6 +40,7 @@ public class Autonimus extends AutoMethods {
 
         int x = testPipeline.stack;
            // int x=2;
+
         if (x == 4) {
             x = 2;
         }
@@ -62,6 +63,7 @@ public class Autonimus extends AutoMethods {
 
 
         }
+
 
         wobble.wobblerClose();
         wobble.wobblerFull();
