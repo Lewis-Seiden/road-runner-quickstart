@@ -44,6 +44,7 @@ public class PowerAuto extends AutoMethods {
         }
 
 
+
         wobble.wobblerClose();
         wobble.wobblerFull();
         Trajectory dropWobbler;
@@ -52,15 +53,25 @@ public class PowerAuto extends AutoMethods {
         wobble.wobblerUp();
         launcher.intakeFlipperRun(0);
         int y = 0;
-
-
+        int z = 0;
+        if (x == 2) {
+            z = 10;
+        }
+        else if(x == 1)
+        {
+            z = 2;
+        }
         if(x == 0)
         {
             y = 0;
         }
+        else if (x == 1)
+        {
+            y = 2;
+        }
         else if (x == 2)
         {
-            y = 5;
+            y = 4;
         }
 
         if(x == 0) {
@@ -72,7 +83,7 @@ public class PowerAuto extends AutoMethods {
         else if(x == 1) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(96, -29), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(96, -23), Math.toRadians(0))
                     .build();
         }
         else {
@@ -83,16 +94,16 @@ public class PowerAuto extends AutoMethods {
         }
         //make dropwobbler2 from secondwobbler.end
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end())
-                .lineToLinearHeading(new Pose2d(58,-34.5 + y, Math.toRadians(-7)))
+                .lineToLinearHeading(new Pose2d(56,-34.5 + z, Math.toRadians(-7)))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(shootPosition1.end())
-                .lineToLinearHeading(new Pose2d(58,-43 +  y, Math.toRadians(-10)))
+                .lineToLinearHeading(new Pose2d(56,-43 +  z, Math.toRadians(-10)))
                 .build();
         Trajectory shootPosition3 = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .lineToLinearHeading(new Pose2d(58,-52.5 + y, Math.toRadians(-10)))
-                .build();
+                .lineToLinearHeading(new Pose2d(56,-52.5 + z, Math.toRadians(-10)))
+                .build();;;;;;;;;;
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition3.end(),true)
-                .splineToLinearHeading(new Pose2d(25, -19, Math.toRadians(90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(25, -19+ y, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
         if(x == 0) {
@@ -104,18 +115,19 @@ public class PowerAuto extends AutoMethods {
         else if(x == 1) {
 
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(96, -34), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(96, -25), Math.toRadians(0))
                     .build();
         }
         else {
 
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(115, -5), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(115, 0), Math.toRadians(0))
                     .build();
+
         }
 
         Trajectory endPosition = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(180))
                 .build();
 
 
