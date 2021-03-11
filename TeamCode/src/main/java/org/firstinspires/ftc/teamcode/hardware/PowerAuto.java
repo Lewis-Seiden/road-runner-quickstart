@@ -43,7 +43,7 @@ public class PowerAuto extends AutoMethods {
             x = 2;
         }
 
-
+        launcher.ringBlocker.setPosition(0);
         wobble.wobblerClose();
         wobble.wobblerFull();
         Trajectory dropWobbler;
@@ -147,5 +147,6 @@ public class PowerAuto extends AutoMethods {
         sleep(500);
 
         mecanumDrive.followTrajectory(endPosition);
+        launcher.ringBlocker.setPosition(0.6);
     }
 }
