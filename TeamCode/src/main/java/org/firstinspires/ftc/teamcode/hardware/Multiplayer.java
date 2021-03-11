@@ -54,10 +54,13 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerUp();
             }
 
-            if(gamepad2.y || gamepad2.right_trigger > 0.1 || endgame){
+            if(gamepad2.right_trigger > 0.1 || endgame){
+                launcher.inTake.setPower(0);
+                launcher.inTake2.setPower(0);
+            } else if(gamepad2.y){
                 launcher.inTake.setPower(-1);
                 launcher.inTake2.setPower(-1);
-            } else{
+            } else {
                 launcher.inTake.setPower(1);
                 launcher.inTake2.setPower(1);
             }
@@ -72,7 +75,7 @@ public class Multiplayer extends LinearOpMode {
                 }
 
             } else {
-                launcher.SpinFlywheel(0.5);
+                launcher.SpinFlywheel(0);
 
             }
             if (gamepad2.right_trigger > 0.1 && endgame) {
@@ -111,18 +114,18 @@ public class Multiplayer extends LinearOpMode {
                 sleep(400);
                 launcher.MovePusher(0);
             }
-
-
              else {
                 launcher.MovePusher(0);
 //                telemetry.addLine("Shooter pusher not pushing");
             }
 
-
-
-
-
-
+            if (gamepad2.left_bumper){
+                launcher.ringBlocker.setPosition(0.6);
+            }else if (endgame){
+                launcher.ringBlocker.setPosition(0);
+            }else {
+                launcher.ringBlocker.setPosition(0.4);
+            }
 
 
             //        if(gamepad2.right_stick_y > 0.1){

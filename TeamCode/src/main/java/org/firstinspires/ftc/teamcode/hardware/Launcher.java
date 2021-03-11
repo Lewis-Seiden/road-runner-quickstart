@@ -21,6 +21,7 @@ public class Launcher {
     public TouchSensor ringSensor;
     private HardwareMap hardwareMap;
     public Servo intakeFlipper;
+    public Servo ringBlocker;
     //private Servo push1;
     //private Servo push2;
 
@@ -30,6 +31,7 @@ public class Launcher {
         pusher = hardwareMap.get(Servo.class, "pusher");
         inTake = hardwareMap.get(DcMotor.class, "intake");
         inTake2 = hardwareMap.get(DcMotor.class, "intake2");
+        ringBlocker = hardwareMap.get(Servo.class, "ring_blocker");
 
         pusher.setDirection(Servo.Direction.REVERSE);
         runner = hardwareMap.get(CRServo.class, "roller");
