@@ -70,14 +70,14 @@ public class PowerAutoTurn extends AutoMethods {
         }
         //make dropwobbler2 from secondwobbler.end
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end())
-                .lineToLinearHeading(new Pose2d(56,-34.5, Math.toRadians(-7)))
+                .lineToLinearHeading(new Pose2d(56,-34.5, Math.toRadians(0)))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(shootPosition1.end())
-                .lineToLinearHeading(new Pose2d(56,-34.5, Math.toRadians(10)))
+                .lineToLinearHeading(new Pose2d(56,-34.6, Math.toRadians(-10)))
                 .build();
         Trajectory shootPosition3 = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .lineToLinearHeading(new Pose2d(56,-34.5, Math.toRadians(30)))
-                .build();;;;;;;;;;
+                .lineToLinearHeading(new Pose2d(56,-34.7, Math.toRadians(-20)))
+                .build();
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition3.end(),true)
                 .splineToLinearHeading(new Pose2d(25, -19, Math.toRadians(90)), Math.toRadians(180))
                 .build();
@@ -139,7 +139,7 @@ public class PowerAutoTurn extends AutoMethods {
         mecanumDrive.followTrajectory(secondWobble);
         sleep(1000);
         wobble.wobblerClose();
-        sleep(500);
+        sleep(1000);
 
         mecanumDrive.followTrajectory(dropSecondWobbler);
         wobble.wobblerDown();
