@@ -54,12 +54,17 @@ public class PowerAuto extends AutoMethods {
         launcher.intakeFlipperRun(0);
         int y = 0;
         int z = 0;
+        int a = 0;
         if (x == 2) {
             z = 10;
         }
         else if(x == 1)
         {
-            z = 2;
+            z = 7;
+        }
+        else if (x == 0);
+        {
+            z = 8;
         }
         if(x == 0)
         {
@@ -67,11 +72,15 @@ public class PowerAuto extends AutoMethods {
         }
         else if (x == 1)
         {
-            y = 2;
+            y = 7;
         }
         else if (x == 2)
         {
-            y = 4;
+            y = 7;
+        }
+        if(x == 4)
+        {
+           a = -2;
         }
 
         if(x == 0) {
@@ -83,7 +92,7 @@ public class PowerAuto extends AutoMethods {
         else if(x == 1) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(96, -23), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(96, -26), Math.toRadians(0))
                     .build();
         }
         else {
@@ -101,9 +110,9 @@ public class PowerAuto extends AutoMethods {
                 .build();
         Trajectory shootPosition3 = mecanumDrive.trajectoryBuilder(shootPosition2.end())
                 .lineToLinearHeading(new Pose2d(56,-52.5 + z, Math.toRadians(-10)))
-                .build();;;;;;;;;;
+                .build();
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition3.end(),true)
-                .splineToLinearHeading(new Pose2d(25, -19+ y, Math.toRadians(90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(25 + a, -26 + y, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
         if(x == 0) {
@@ -115,7 +124,7 @@ public class PowerAuto extends AutoMethods {
         else if(x == 1) {
 
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(96, -25), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(96, -28), Math.toRadians(0))
                     .build();
         }
         else {
