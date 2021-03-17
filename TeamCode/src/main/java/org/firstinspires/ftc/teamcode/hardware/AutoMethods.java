@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,5 +17,13 @@ public abstract class AutoMethods extends LinearOpMode {
     final double TICKS_PER_INCH = 60.7873786408;
     protected SampleMecanumDrive mecanumDrive;
 
-
+    public static double wrapAngle(double radians){
+        while (radians > Math.toRadians(180)){
+            radians -= Math.toRadians(360);
+        }
+        while (radians < Math.toRadians(-180)){
+            radians += Math.toRadians(360);
+        }
+        return radians;
+    }
 }

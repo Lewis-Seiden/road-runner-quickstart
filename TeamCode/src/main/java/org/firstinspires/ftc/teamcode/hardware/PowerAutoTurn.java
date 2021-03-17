@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.AutoMethods;
+import org.firstinspires.ftc.teamcode.hardware.AutoMethods;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.vision.UltamiteGoalPipeline;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -40,7 +40,8 @@ public class PowerAutoTurn extends AutoMethods {
             x = 2;
         }
 
-
+        double shootTurn1 = -12;
+        double shootTurn2 = -20;
 
         wobble.wobblerClose();
         wobble.wobblerFull();
@@ -48,7 +49,6 @@ public class PowerAutoTurn extends AutoMethods {
         Trajectory dropSecondWobbler;
 
         wobble.wobblerUp();
-        launcher.intakeFlipperRun(0);
 
         if(x == 0) {
 
@@ -70,15 +70,15 @@ public class PowerAutoTurn extends AutoMethods {
         }
         //make dropwobbler2 from secondwobbler.end
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end())
-                .lineToLinearHeading(new Pose2d(56,-34.5, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(56,-34.5, Math.toRadians(-7)))
                 .build();
-        Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(shootPosition1.end())
-                .lineToLinearHeading(new Pose2d(56,-34.6, Math.toRadians(-10)))
-                .build();
-        Trajectory shootPosition3 = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .lineToLinearHeading(new Pose2d(56,-34.7, Math.toRadians(-20)))
-                .build();
-        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition3.end(),true)
+//        Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(shootPosition1.end())
+//                .lineToLinearHeading(new Pose2d(56,-34.6, Math.toRadians(-10)))
+//                .build();
+//        Trajectory shootPosition3 = mecanumDrive.trajectoryBuilder(shootPosition2.end())
+//                .lineToLinearHeading(new Pose2d(56,-34.7, Math.toRadians(-20)))
+//                .build();
+        Trajectory secondWobble = mecanumDrive.trajectoryBuilder(new Pose2d(shootPosition1.end().getX(),shootPosition1.end().getY(), Math.toRadians(shootTurn1 + shootTurn2) + shootPosition1.end().getHeading()),true)
                 .splineToLinearHeading(new Pose2d(25, -19, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
@@ -125,11 +125,13 @@ public class PowerAutoTurn extends AutoMethods {
         launcher.MovePusher(0.2);
         sleep(700);
         launcher.MovePusher(0);
-            mecanumDrive.followTrajectory(shootPosition2);
+            mecanumDrive.turn(Math.toRadians(shootTurn1) - AutoMethods.wrapAngle(mecanumDrive.getPoseEstimate().getHeading()));
+        sleep(300);
         launcher.MovePusher(0.2);
         sleep(700);
         launcher.MovePusher(0);
-            mecanumDrive.followTrajectory(shootPosition3);
+            mecanumDrive.turn(Math.toRadians(shootTurn2) - AutoMethods.wrapAngle(mecanumDrive.getPoseEstimate().getHeading()));
+        sleep(300);
         launcher.MovePusher(0.2);
         sleep(700);
         launcher.MovePusher(0);

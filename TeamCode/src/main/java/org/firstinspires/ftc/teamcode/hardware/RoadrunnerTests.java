@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
-import org.firstinspires.ftc.teamcode.AutoMethods;
+import org.firstinspires.ftc.teamcode.hardware.AutoMethods;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.vision.UltamiteGoalPipeline;
 import org.openftc.easyopencv.OpenCvCameraFactory;

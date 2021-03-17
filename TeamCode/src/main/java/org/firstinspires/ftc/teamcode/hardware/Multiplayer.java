@@ -58,7 +58,7 @@ public class Multiplayer extends LinearOpMode {
                 launcher.inTake.setPower(0);
                 launcher.inTake2.setPower(0);
             } else if(gamepad2.y){
-                launcher.inTake.setPower(-1);
+//                launcher.inTake.setPower(-1);
                 launcher.inTake2.setPower(-1);
             } else {
                 launcher.inTake.setPower(1);
@@ -96,7 +96,6 @@ public class Multiplayer extends LinearOpMode {
             if(endgame && gamepad2.right_trigger > 0.1) {
                 launcher.inTake.setPower(0);
                 launcher.inTake2.setPower(0);
-
             }
 
             telemetry.addLine("isEndgame: " + endgame);
