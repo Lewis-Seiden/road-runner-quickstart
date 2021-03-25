@@ -57,19 +57,20 @@ public class AutoPowerRing extends AutoMethods {
                     .build();
         }
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
-                .splineToLinearHeading(new Pose2d(xShoot + 1, yShoot, Math.toRadians(-11)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(xShoot + 1, yShoot, Math.toRadians(-8)), Math.toRadians(180))
                 .build();
 
         Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end(), true)
-                .splineToConstantHeading(new Vector2d(30, -12), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(30, -12), Math.toRadians(140))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
-                .splineToLinearHeading(new Pose2d(xShoot + 1, yShoot, Math.toRadians(-11)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot + 1, yShoot, Math.toRadians(-8)), Math.toRadians(0))
                 .build();
 
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .splineToLinearHeading(new Pose2d(22, -21, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(28, -20.5, Math.toRadians(90)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(22, -20.5), Math.toRadians(180))
                 .build();
         if (x == 0) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
@@ -77,7 +78,7 @@ public class AutoPowerRing extends AutoMethods {
                     .build();
         } else if (x == 1) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
-                    .splineToLinearHeading(new Pose2d(80, -24, 180), Math.toRadians(180))
+                    .splineToLinearHeading(new Pose2d(70, -24, Math.toRadians(-90)), Math.toRadians(180))
                     .build();
         } else {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
