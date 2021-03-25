@@ -11,10 +11,10 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class UltamiteGoalPipeline extends OpenCvPipeline {
     public double threshold;
-    public double x1BottomRectangle = 163;
-    public double y1BottomRectangle = 8;
-    public double x2BottomRectangle = 167;
-    public double y2BottomRectangle = 28;
+    public double x1BottomRectangle = 158;
+    public double y1BottomRectangle = 4;
+    public double x2BottomRectangle = 165;
+    public double y2BottomRectangle = 31;
     /*coordinates that check for the bottom ring.
     You can find the values by running VisionTester.
     x1 is what x is, x2 is x plus width, y1 is what y is y2 is y plus height.

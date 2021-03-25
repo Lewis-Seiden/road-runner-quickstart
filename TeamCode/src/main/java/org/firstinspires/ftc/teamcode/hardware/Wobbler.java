@@ -61,7 +61,7 @@ public class Wobbler {
     }
     public void wobblerUp() {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
-        wobblerLifter.setTargetPosition(-2848);
+        wobblerLifter.setTargetPosition(-2648);
         wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         wobblerLifter.setPower(0.5);
 
