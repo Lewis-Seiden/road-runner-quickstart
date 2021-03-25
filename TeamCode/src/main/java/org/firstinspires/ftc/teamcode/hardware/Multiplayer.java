@@ -54,7 +54,7 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerUp();
             }
 
-            if(gamepad2.right_trigger > 0.1 || endgame){
+            if((gamepad2.right_trigger > 0.1  || endgame) && !gamepad2.x){
                 launcher.inTake.setPower(0);
                 launcher.inTake2.setPower(0);
             } else if(gamepad2.y){
@@ -79,7 +79,7 @@ public class Multiplayer extends LinearOpMode {
 
             }
             if (gamepad2.right_trigger > 0.1 && endgame) {
-                launcher.SpinFlywheel(0.9);
+                launcher.SpinFlywheel(1);
             }
             if (gamepad1.left_trigger > 0.1) {
                 fineTune = 3;
