@@ -11,7 +11,7 @@ public class Wobbler {
    public DcMotor wobblerLifter;
    private Telemetry telemetry;
 
-   private int encoderTicks = 3892;
+   private int encoderTicks = 1331;
    private double gearRatio = 2;
    private double encoderTicksPerDegree = encoderTicks/360 * gearRatio;
 
@@ -23,17 +23,17 @@ public class Wobbler {
     }
 
     public void wobblerOpen(){
-        wobblerGrabber.setPosition(0.5);
+        wobblerGrabber.setPosition(0);
 //        telemetry.addLine("Wobbler open function called.");
     }
 
     public void wobblerOpenDC(){
-        wobblerGrabber.setPosition(0.3);
+        wobblerGrabber.setPosition(0);
 //        telemetry.addLine("Wobbler open function called.");
     }
     //robot releases the wobbler
     public void wobblerClose(){
-        wobblerGrabber.setPosition(0);
+        wobblerGrabber.setPosition(0.3);
 //        telemetry.addLine("Wobbler closed function called.");
     }
 
@@ -44,16 +44,16 @@ public class Wobbler {
 
             wobblerLifter.setTargetPosition(1);
             wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobblerLifter.setPower(0.5);
+            wobblerLifter.setPower(-0.5);
 
 //        telemetry.addLine("Wobbler down function called.");
     }
     //wobbler gets put down
     public void wobblerFull() {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
-        wobblerLifter.setTargetPosition(wobblerLifter.getCurrentPosition() - 100);
+        wobblerLifter.setTargetPosition(1331);
         wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wobblerLifter.setPower(-0.3);
+        wobblerLifter.setPower(0.3);
 //        telemetry.addLine("Wobbler up function called.");
         telemetry.update();
 //        t.addLine(encoder.pos);
@@ -61,9 +61,9 @@ public class Wobbler {
     }
     public void wobblerUp() {
 //        wobblerLifter.setTargetPosition((int)(-150 * encoderTicksPerDegree));
-        wobblerLifter.setTargetPosition(-2848);
+        wobblerLifter.setTargetPosition(300);
         wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wobblerLifter.setPower(0.5);
+        wobblerLifter.setPower(-0.5);
 
 //        telemetry.addLine("Wobbler up function called.");
 
