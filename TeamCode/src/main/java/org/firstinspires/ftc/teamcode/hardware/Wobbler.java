@@ -23,17 +23,17 @@ public class Wobbler {
     }
 
     public void wobblerOpen(){
-        wobblerGrabber.setPosition(0);
+        wobblerGrabber.setPosition(0.5);
 //        telemetry.addLine("Wobbler open function called.");
     }
 
     public void wobblerOpenDC(){
-        wobblerGrabber.setPosition(0);
+        wobblerGrabber.setPosition(0.5);
 //        telemetry.addLine("Wobbler open function called.");
     }
     //robot releases the wobbler
     public void wobblerClose(){
-        wobblerGrabber.setPosition(0.3);
+        wobblerGrabber.setPosition(1);
 //        telemetry.addLine("Wobbler closed function called.");
     }
 

@@ -21,7 +21,6 @@ public class Multiplayer extends LinearOpMode {
     public void runOpMode() {
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap);
 
-
         Wobbler wobbler = new Wobbler(hardwareMap, telemetry);
         Launcher launcher = new Launcher(hardwareMap, telemetry);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -50,8 +49,8 @@ public class Multiplayer extends LinearOpMode {
             }
             if (gamepad2.left_stick_y > 0.05 && !wobbleOpen) {
                 wobbler.wobblerDown();
-            } else if (gamepad2.left_stick_y < -0.05) {
-                wobbler.wobblerUp();
+            } else if (gamepad2.left_stick_y < -0.05 && !wobbleOpen) {
+                wobbler.wobblerFull();
             }
 
             if((gamepad2.right_trigger > 0.1  || endgame) && !gamepad2.x){
@@ -97,7 +96,7 @@ public class Multiplayer extends LinearOpMode {
                 launcher.inTake.setPower(0);
                 launcher.inTake2.setPower(0);
             }
-
+            //Makes the robot shoot 3 ring
             telemetry.addLine("isEndgame: " + endgame);
             if (gamepad2.right_bumper && !endgame) {
                 mecanumDrive.SetPowerMecanum(0,0,0,1);

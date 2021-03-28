@@ -64,12 +64,7 @@ public class Launcher {
     public void SpinFlywheel(double speed){
         launcherFlywheel.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);//change the number to change target voltage
     }
-    public void inTakeRun (double speed)
-    {
-        inTake.setPower(12/ Voltage.getVoltage(hardwareMap)* speed);
-        inTake2.setPower(12/ Voltage.getVoltage(hardwareMap) * speed);
 
-    }
     public void intakeFlipperRun (double location)
     {
         intakeFlipper.setPosition(location);

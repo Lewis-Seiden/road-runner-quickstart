@@ -70,7 +70,7 @@ public class AutoPowerRing extends AutoMethods {
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())
                 .splineToSplineHeading(new Pose2d(28, -20.5, Math.toRadians(90)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(22, -20.5), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(21, -21.5), Math.toRadians(180))
                 .build();
         if (x == 0) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
