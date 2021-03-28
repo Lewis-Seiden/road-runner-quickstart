@@ -123,6 +123,7 @@ public class AutoPowerRing extends AutoMethods {
         sleep(700);
         launcher.MovePusher(0);
         sleep(700);
+
         if (x == 1) {
             launcher.inTake.setPower(1);
             launcher.inTake2.setPower(1);
