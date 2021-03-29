@@ -36,6 +36,11 @@ public class AutoPowerRing extends AutoMethods {
         Trajectory dropSecondWobbler;
         wobble.wobblerClose();
         wobble.wobblerFull();
+        int intake4 = 0;
+        if(x == 4)
+        {
+            intake4 = 4;
+        }
 
 
         launcher.intakeFlipperRun(0);
@@ -62,7 +67,7 @@ public class AutoPowerRing extends AutoMethods {
                 .build();
 
         Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end(), true)
-                .splineToConstantHeading(new Vector2d(30, -12), Math.toRadians(140))
+                .splineToConstantHeading(new Vector2d(30 - intake4, -12), Math.toRadians(140))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
                 .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(0))
@@ -136,6 +141,26 @@ public class AutoPowerRing extends AutoMethods {
             sleep(700);
             launcher.MovePusher(0);
 
+        }
+        else if (x == 4)
+        {
+            launcher.inTake.setPower(1);
+            launcher.inTake2.setPower(1);
+            sleep(100);
+            mecanumDrive.followTrajectory(ringPickUp);
+            sleep(400);
+            mecanumDrive.followTrajectory(shootPosition2);
+            launcher.MovePusher(0.2);
+            sleep(700);
+            launcher.MovePusher(0);
+            sleep(700);
+            launcher.MovePusher(0.2);
+            sleep(700);
+            launcher.MovePusher(0);
+            sleep(700);
+            launcher.MovePusher(0.2);
+            sleep(700);
+            launcher.MovePusher(0);
         }
 
         //spin up shooter, and then shoot
