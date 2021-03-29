@@ -29,7 +29,7 @@ public class AutoPowerRing extends AutoMethods {
         webcam.startStreaming(320, 240);
 //        sleep(10000);
         int x = testPipeline.stack;
-        x = 1;
+        x = 4;
         int xShoot = 40;
         int yShoot = -14;
         Trajectory dropWobbler;
@@ -55,18 +55,22 @@ public class AutoPowerRing extends AutoMethods {
                     .splineToSplineHeading(new Pose2d(70, 2, 0), Math.toRadians(0))
                     .splineToSplineHeading(new Pose2d(85, -25, Math.toRadians(-90)), Math.toRadians(-90))
                     .build();
+            xShoot = 40;
+            yShoot = -14;
         } else {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(120, 0), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(110, -5), Math.toRadians(0))
                     .build();
+            xShoot = 40;
+            yShoot = -14;
         }
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
-                .splineToLinearHeading(new Pose2d(70, -29, Math.toRadians(-90)), Math.toRadians(0))
+                .strafeRight(20)
                 .splineToSplineHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(180))
                 .build();
 
-        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end(), true)
+        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(new Pose2d(shootPosition1.end().getX(), shootPosition1.end().getY() + 20, shootPosition1.end().getHeading()), true)
                 .splineToConstantHeading(new Vector2d(30 - intake4, -12), Math.toRadians(140))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
@@ -92,6 +96,7 @@ public class AutoPowerRing extends AutoMethods {
                     .build();
         }
         Trajectory line = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end())
+                .strafeRight(20)
                 .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(0))
                 .build();
 
@@ -107,9 +112,11 @@ public class AutoPowerRing extends AutoMethods {
         webcam.closeCameraDevice();
 
 
-        wobble.wobblerDown();
+
 //        wobble.wobblerUp();
         mecanumDrive.followTrajectory(dropWobbler);
+        wobble.wobblerDown();
+        sleep(500);
         wobble.wobblerOpen();
         launcher.SpinFlywheel(1);
         //wobble.wobblerOpen();
@@ -161,7 +168,8 @@ public class AutoPowerRing extends AutoMethods {
             launcher.MovePusher(0.2);
             sleep(700);
             launcher.MovePusher(0);
-        }
+    }
+
 
         //spin up shooter, and then shoot
         wobble.wobblerDown();
