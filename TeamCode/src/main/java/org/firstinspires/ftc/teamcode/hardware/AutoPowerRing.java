@@ -27,10 +27,10 @@ public class AutoPowerRing extends AutoMethods {
         webcam.setPipeline(testPipeline);
         webcam.openCameraDevice();
         webcam.startStreaming(320, 240);
-        sleep(10000);
+//        sleep(10000);
         int x = testPipeline.stack;
         x = 1;
-        int xShoot = 38;
+        int xShoot = 40;
         int yShoot = -14;
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
@@ -42,13 +42,13 @@ public class AutoPowerRing extends AutoMethods {
         if (x == 0) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(72, 0), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(72, 0, Math.toRadians(90)), Math.toRadians(0))
                     .build();
         } else if (x == 1) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToConstantHeading(new Vector2d(70, 2), Math.toRadians(0))
-                    .splineToConstantHeading(new Vector2d(96, -29), Math.toRadians(-90))
+                    .splineToSplineHeading(new Pose2d(70, 2, 0), Math.toRadians(0))
+                    .splineToSplineHeading(new Pose2d(85, -25, Math.toRadians(-90)), Math.toRadians(-90))
                     .build();
         } else {
 
@@ -57,20 +57,21 @@ public class AutoPowerRing extends AutoMethods {
                     .build();
         }
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
-                .splineToLinearHeading(new Pose2d(xShoot + 1, yShoot, Math.toRadians(-8)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(70, -29, Math.toRadians(-90)), Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(180))
                 .build();
 
         Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end(), true)
                 .splineToConstantHeading(new Vector2d(30, -12), Math.toRadians(140))
                 .build();
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
-                .splineToLinearHeading(new Pose2d(xShoot + 1, yShoot, Math.toRadians(-8)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(0))
                 .build();
 
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .splineToSplineHeading(new Pose2d(28, -20.5, Math.toRadians(90)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(21, -21.5), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(28, -19.5, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(21, -19.5, Math.toRadians(90)), Math.toRadians(180)   )
                 .build();
         if (x == 0) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
@@ -78,7 +79,7 @@ public class AutoPowerRing extends AutoMethods {
                     .build();
         } else if (x == 1) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
-                    .splineToLinearHeading(new Pose2d(70, -24, Math.toRadians(-90)), Math.toRadians(180))
+                    .splineToLinearHeading(new Pose2d(71, -18, Math.toRadians(-90)), Math.toRadians(180))
                     .build();
         } else {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
@@ -101,8 +102,8 @@ public class AutoPowerRing extends AutoMethods {
         webcam.closeCameraDevice();
 
 
-        //wobble.wobblerDown();
-        wobble.wobblerUp();
+        wobble.wobblerDown();
+//        wobble.wobblerUp();
         mecanumDrive.followTrajectory(dropWobbler);
         wobble.wobblerOpen();
         launcher.SpinFlywheel(1);
