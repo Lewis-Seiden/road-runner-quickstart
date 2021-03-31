@@ -401,4 +401,26 @@ public class SampleMecanumDrive extends MecanumDrive {
     public double getRawExternalHeading() {
         return imu.getAngularOrientation().firstAngle;
     }
+
+
+    //else if (x == 4)
+    //        {
+    //            launcher.inTake.setPower(1);
+    //            launcher.inTake2.setPower(1);
+    //            sleep(100);
+    //            mecanumDrive.followTrajectory(ringPickUp);
+    //            sleep(400);
+    //            mecanumDrive.followTrajectory(shootPosition2);
+    //            launcher.MovePusher(0.2);
+    //            sleep(700);
+    //            launcher.MovePusher(0);
+    //            sleep(700);
+    //            launcher.MovePusher(0.2);
+    //            sleep(700);
+    //            launcher.MovePusher(0);
+    //            sleep(700);
+    //            launcher.MovePusher(0.2);
+    //            sleep(700);
+    //            launcher.MovePusher(0);
+    //        }
 }
