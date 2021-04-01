@@ -43,8 +43,10 @@ public class AutoPowerRing extends AutoMethods {
         x = 4;
         int xShoot = 40;
         int yShoot = -14;
+        int headingShoot = -8;
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
+        Trajectory ringPickUp;
         wobble.wobblerClose();
         wobble.wobblerFull();
         int intake4 = 0;
@@ -73,31 +75,42 @@ public class AutoPowerRing extends AutoMethods {
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
                     .splineToConstantHeading(new Vector2d(110, -5), Math.toRadians(0))
                     .build();
-            xShoot = 52;
-            yShoot = -14;
+            xShoot = 48;
+            yShoot = -30;
+            headingShoot = 4;
         }
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())
                 .strafeRight(10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end())
-                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(headingShoot)), Math.toRadians(180))
                 .build();
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(MAX_ANG_VEL),
-                new MecanumVelocityConstraint(MAX_VEL/5, TRACK_WIDTH)));
-
-        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
-                .splineToConstantHeading(new Vector2d(30 - intake4, -14), Math.toRadians(180))
-                .build();
-
+                new MecanumVelocityConstraint(MAX_VEL/4, TRACK_WIDTH)));
+        if (x == 1) {
+            ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
+                    .splineToConstantHeading(new Vector2d(30, -14), Math.toRadians(180))
+                    .build();
+        } else if (x == 4){
+            ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-90))))
+                    .lineTo(new Vector2d(28, -5))
+                    .build();
+            xShoot = 40;
+            yShoot = -14;
+            headingShoot = -8;
+        } else {
+            ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
+                    .build();
+        }
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(MAX_ANG_VEL),
                 new MecanumVelocityConstraint(MAX_VEL, TRACK_WIDTH)));
 
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
-                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(headingShoot)), Math.toRadians(0))
                 .build();
 
 
@@ -120,7 +133,7 @@ public class AutoPowerRing extends AutoMethods {
         }
         Trajectory line = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end())
                 .strafeRight(20)
-                .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(180))
                 .build();
 
 
@@ -176,12 +189,17 @@ public class AutoPowerRing extends AutoMethods {
         }
         else if (x == 4)
         {
+            mecanumDrive.turn(Math.toRadians(-100 - mecanumDrive.getPoseEstimate().getHeading()));
             launcher.inTake.setPower(1);
             launcher.inTake2.setPower(1);
             sleep(100);
             mecanumDrive.followTrajectory(ringPickUp);
             sleep(400);
             mecanumDrive.followTrajectory(shootPosition2);
+            launcher.MovePusher(0.2);
+            sleep(700);
+            launcher.MovePusher(0);
+            sleep(700);
             launcher.MovePusher(0.2);
             sleep(700);
             launcher.MovePusher(0);
