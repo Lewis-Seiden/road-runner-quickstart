@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -12,6 +16,13 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.vision.UltamiteGoalPipeline;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvWebcam;
+
+import java.util.Arrays;
+
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
+
 @Autonomous(name="AUTORING", group="Linear Opmode")
 public class AutoPowerRing extends AutoMethods {
 
@@ -62,17 +73,29 @@ public class AutoPowerRing extends AutoMethods {
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
                     .splineToConstantHeading(new Vector2d(110, -5), Math.toRadians(0))
                     .build();
-            xShoot = 40;
+            xShoot = 52;
             yShoot = -14;
         }
-        Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(dropWobbler.end(), true)
-                .strafeRight(20)
-                .splineToSplineHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(180))
+
+        Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())
+                .strafeRight(10)
+                .build();
+        Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end())
+                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(180))
                 .build();
 
-        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(new Pose2d(shootPosition1.end().getX(), shootPosition1.end().getY() + 20, shootPosition1.end().getHeading()), true)
-                .splineToConstantHeading(new Vector2d(30 - intake4, -12), Math.toRadians(140))
+        mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
+                new AngularVelocityConstraint(MAX_ANG_VEL),
+                new MecanumVelocityConstraint(MAX_VEL/5, TRACK_WIDTH)));
+
+        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
+                .splineToConstantHeading(new Vector2d(30 - intake4, -14), Math.toRadians(180))
                 .build();
+
+        mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
+                new AngularVelocityConstraint(MAX_ANG_VEL),
+                new MecanumVelocityConstraint(MAX_VEL, TRACK_WIDTH)));
+
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
                 .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(0))
                 .build();
@@ -101,8 +124,6 @@ public class AutoPowerRing extends AutoMethods {
                 .build();
 
 
-
-
         while (!isStarted()) {
             telemetry.addData("stack ", x);
             telemetry.update();
@@ -114,15 +135,19 @@ public class AutoPowerRing extends AutoMethods {
 
 
 //        wobble.wobblerUp();
+        launcher.SpinFlywheel(1);
         mecanumDrive.followTrajectory(dropWobbler);
         wobble.wobblerDown();
         sleep(500);
         wobble.wobblerOpen();
-        launcher.SpinFlywheel(1);
+
         //wobble.wobblerOpen();
         //wobble.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(500);
+        mecanumDrive.followTrajectory(wobbleLeave);
+
         mecanumDrive.followTrajectory(shootPosition1);
+
         launcher.MovePusher(0.2);
         sleep(1000);
         launcher.MovePusher(0);
