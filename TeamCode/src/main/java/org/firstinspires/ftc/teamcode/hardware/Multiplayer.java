@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
@@ -23,6 +24,7 @@ public class Multiplayer extends LinearOpMode {
 
         Wobbler wobbler = new Wobbler(hardwareMap, telemetry);
         Launcher launcher = new Launcher(hardwareMap, telemetry);
+        Gyro gyro = new Gyro(hardwareMap);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         wobbler.wobblerLifter.setTargetPosition(0);
         wobbler.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -75,6 +77,31 @@ public class Multiplayer extends LinearOpMode {
 
             } else {
                 launcher.SpinFlywheel(0);
+
+            }
+            if(gamepad1.a)
+            {
+                double integral = 0;
+                double previousError = gyro.getAngle();
+                ElapsedTime time = new ElapsedTime();
+                double prevTime = time.milliseconds()/1000;
+                double KP = 1;
+                double KI = 0;
+                double KD = 0;
+                double output;
+                while(true) {
+                    double error = -gyro.getAngle();
+                    double currentTime = time.milliseconds()/1000;
+                    double deltatime = currentTime - prevTime;
+                    prevTime = currentTime;
+                    integral += error * deltatime;
+                    double derivative = (error - previousError)/deltatime;
+                    previousError = error;
+                    output = KP * error + KI * integral + KD * derivative;
+                    mecanumDrive.SetPowerMecanum(0, 0, output, 1);
+
+                }
+
 
             }
             if (gamepad2.right_trigger > 0.1 && endgame) {
