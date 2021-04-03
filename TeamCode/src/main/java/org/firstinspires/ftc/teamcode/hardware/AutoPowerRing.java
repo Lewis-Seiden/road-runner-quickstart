@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstra
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -23,7 +24,8 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_VEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
 
-@Autonomous(name="AUTORING", group="Linear Opmode")
+@Autonomous(name="AUTORINGOLD", group="Linear Opmode")
+@Disabled
 public class AutoPowerRing extends AutoMethods {
 
     public void runOpMode () {
