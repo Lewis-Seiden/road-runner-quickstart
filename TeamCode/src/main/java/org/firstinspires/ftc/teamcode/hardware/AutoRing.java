@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.hardware.AutoMethods;
@@ -23,8 +24,8 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_VEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
 
-@Autonomous(name="AUTOPWRRING", group="Linear Opmode")
-public class AutoPowerRing extends AutoMethods {
+@Autonomous(name="AUTORING", group="Linear Opmode")
+public class AutoRing extends AutoMethods {
 
     public void runOpMode () {
         mecanumDrive = new SampleMecanumDrive(hardwareMap);
@@ -44,6 +45,7 @@ public class AutoPowerRing extends AutoMethods {
         int xShoot = 40;
         int yShoot = -14;
         int headingShoot = -8;
+        String tag = "autoStopDebug";
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
         Trajectory ringPickUp;
@@ -130,22 +132,24 @@ public class AutoPowerRing extends AutoMethods {
                 .strafeRight(5)
                 .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(180))
                 .build();
-//        telemetry.addLine("hi");
+
+        RobotLog.dd(tag,"init done");
 
 
-//        while (!isStarted() && opModeIsActive()) {
-//            telemetry.addData("stack ", x);
-//            telemetry.update();
-//        }
-
+            telemetry.addData("stack ", x);
+            telemetry.update();
+            RobotLog.dd(tag,"waitforstart");
         waitForStart();
+
+        RobotLog.dd(tag,"start");
+
+
 
         webcam.stopStreaming();
         webcam.closeCameraDevice();
 
 
 
-//        wobble.wobblerUp();
         launcher.SpinFlywheel(1);
 
         wobble.wobblerUp();
@@ -156,6 +160,7 @@ public class AutoPowerRing extends AutoMethods {
 
         mecanumDrive.followTrajectory(wobbleLeave);
 
+        RobotLog.dd(tag,"wobble1done");
         mecanumDrive.followTrajectory(shootPosition1);
 
         launcher.MovePusher(0.2);
@@ -168,7 +173,7 @@ public class AutoPowerRing extends AutoMethods {
         sleep(700);
         launcher.MovePusher(0.2);
         sleep(300);
-
+        RobotLog.dd(tag,"shoot1done");
 
 
         if (x == 1) {
@@ -209,7 +214,7 @@ public class AutoPowerRing extends AutoMethods {
             launcher.MovePusher(0.2);
             sleep(300);
             launcher.MovePusher(0);
-    }
+        }
 
 
         //spin up shooter, and then shoot
