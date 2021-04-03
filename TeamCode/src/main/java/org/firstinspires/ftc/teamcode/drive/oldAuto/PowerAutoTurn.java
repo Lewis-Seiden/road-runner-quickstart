@@ -15,11 +15,12 @@ import org.firstinspires.ftc.teamcode.hardware.Wobbler;
 import org.firstinspires.ftc.teamcode.vision.UltamiteGoalPipeline;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvWebcam;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 //STUFF IS COMMENTED FOR TESTING, UNCOMMENT BEFORE USE
 
 @Autonomous(name="AUTOPWRTURN", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class PowerAutoTurn extends AutoMethods {
 
     public void runOpMode() {

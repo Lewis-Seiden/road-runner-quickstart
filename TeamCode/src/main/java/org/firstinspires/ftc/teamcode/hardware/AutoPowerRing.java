@@ -43,10 +43,11 @@ public class AutoPowerRing extends AutoMethods {
         x = 4;
         int xShoot = 40;
         int yShoot = -14;
+        int headingShoot = -8;
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
-        wobble.wobblerClose();
-        wobble.wobblerFull();
+        Trajectory ringPickUp;
+
         int intake4 = 0;
         if(x == 4)
         {
@@ -73,31 +74,36 @@ public class AutoPowerRing extends AutoMethods {
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
                     .splineToConstantHeading(new Vector2d(110, -5), Math.toRadians(0))
                     .build();
-            xShoot = 52;
-            yShoot = -14;
+            xShoot = 34;
+            yShoot = -24;
+            headingShoot = -2;
         }
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())
                 .strafeRight(10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end())
-                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(headingShoot)), Math.toRadians(180))
                 .build();
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(MAX_ANG_VEL),
-                new MecanumVelocityConstraint(MAX_VEL/5, TRACK_WIDTH)));
+                new MecanumVelocityConstraint(MAX_VEL/2, TRACK_WIDTH)));
 
-        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
-                .splineToConstantHeading(new Vector2d(30 - intake4, -14), Math.toRadians(180))
-                .build();
+
+            ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-110))))
+                    .lineTo(new Vector2d(35, -3))
+                    .build();
+            xShoot = 38;
+            yShoot = -14;
+            headingShoot = -10;
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(MAX_ANG_VEL),
                 new MecanumVelocityConstraint(MAX_VEL, TRACK_WIDTH)));
 
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())
-                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(-8)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(headingShoot)), Math.toRadians(0))
                 .build();
 
 
@@ -119,31 +125,33 @@ public class AutoPowerRing extends AutoMethods {
                     .build();
         }
         Trajectory line = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end())
-                .strafeRight(20)
+                .strafeRight(5)
                 .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(0))
                 .build();
 
+        wobble.wobblerClose();
+        wobble.wobblerFull();
 
-        while (!isStarted()) {
+        while (!isStarted() && !isStopRequested()) {
             telemetry.addData("stack ", x);
             telemetry.update();
         }
+
+
 
         webcam.stopStreaming();
         webcam.closeCameraDevice();
 
 
 
-//        wobble.wobblerUp();
+        wobble.wobblerUp();
         launcher.SpinFlywheel(1);
         mecanumDrive.followTrajectory(dropWobbler);
         wobble.wobblerDown();
-        sleep(500);
+        sleep(200);
         wobble.wobblerOpen();
 
-        //wobble.wobblerOpen();
-        //wobble.wobblerLifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        sleep(500);
+        sleep(100);
         mecanumDrive.followTrajectory(wobbleLeave);
 
         mecanumDrive.followTrajectory(shootPosition1);
@@ -178,6 +186,7 @@ public class AutoPowerRing extends AutoMethods {
         {
             launcher.inTake.setPower(1);
             launcher.inTake2.setPower(1);
+            mecanumDrive.turn(Math.toRadians(-110 - mecanumDrive.getPoseEstimate().getHeading()));
             sleep(100);
             mecanumDrive.followTrajectory(ringPickUp);
             sleep(400);
@@ -200,9 +209,10 @@ public class AutoPowerRing extends AutoMethods {
         wobble.wobblerDown();
 
         mecanumDrive.followTrajectory(secondWobble);
-        sleep(1000);
+        sleep(200);
         wobble.wobblerClose();
-        sleep(500);
+        sleep(200);
+        wobble.wobblerUp();
 
         mecanumDrive.followTrajectory(dropSecondWobbler);
         wobble.wobblerDown();

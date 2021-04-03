@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 //STUFF IS COMMENTED FOR TESTING, UNCOMMENT BEFORE USE
 
 @Autonomous(name="AUTOTEST", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class RoadrunnerTests extends AutoMethods {
     public double xMove = -80.0;
     public double yMove = 0.0;

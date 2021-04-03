@@ -21,7 +21,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 //STUFF IS COMMENTED FOR TESTING, UNCOMMENT BEFORE USE
 
 @Autonomous(name="AUTOPWR", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class PowerAuto extends AutoMethods {
 
     public void runOpMode() {

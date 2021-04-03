@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstra
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -24,8 +25,9 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_VEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
 
-@Autonomous(name="AUTORING", group="Linear Opmode")
-public class AutoRing extends AutoMethods {
+@Autonomous(name="AutoRingBackup", group="Linear Opmode")
+@Disabled
+public class AutoRingBackup extends AutoMethods {
 
     public void runOpMode () {
         mecanumDrive = new SampleMecanumDrive(hardwareMap);
