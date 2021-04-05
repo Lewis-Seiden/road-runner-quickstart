@@ -27,7 +27,7 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
 
 @Autonomous(name="AUTORING", group="Linear Opmode")
 //@Disabled
-public class AutoRingBackup extends AutoMethods {
+public class AutoRing extends AutoMethods {
 
     public void runOpMode () {
         mecanumDrive = new SampleMecanumDrive(hardwareMap);
@@ -43,10 +43,11 @@ public class AutoRingBackup extends AutoMethods {
         webcam.startStreaming(320, 240);
 //        sleep(10000);
         int x = testPipeline.stack;
-        x = 4;
+        x = 0;
         int xShoot = 40;
         int yShoot = -14;
         int headingShoot = -8;
+        int wobble2offset = 0;
         String tag = "autoStopDebug";
         Trajectory dropWobbler;
         Trajectory dropSecondWobbler;
@@ -58,7 +59,7 @@ public class AutoRingBackup extends AutoMethods {
         if (x == 0) {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToLinearHeading(new Pose2d(72, 0, Math.toRadians(90)), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(72, 0, Math.toRadians(0)), Math.toRadians(0))
                     .build();
         } else if (x == 1) {
 
@@ -66,8 +67,9 @@ public class AutoRingBackup extends AutoMethods {
                     .splineToSplineHeading(new Pose2d(70, 2, 0), Math.toRadians(0))
                     .splineToSplineHeading(new Pose2d(85, -25, Math.toRadians(-90)), Math.toRadians(-90))
                     .build();
-            xShoot = 40;
+            xShoot = 38;
             yShoot = -14;
+            headingShoot = -11;
         } else {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
@@ -75,14 +77,14 @@ public class AutoRingBackup extends AutoMethods {
                     .build();
             xShoot = 33;
             yShoot = -24;
-            headingShoot = -2;
+            headingShoot = -12;
         }
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())
                 .strafeRight(10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)
-                .splineToLinearHeading(new Pose2d(xShoot, yShoot, Math.toRadians(headingShoot)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(xShoot, yShoot, Math.toRadians(headingShoot)), Math.toRadians(180))
                 .build();
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
@@ -92,16 +94,19 @@ public class AutoRingBackup extends AutoMethods {
             ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
                     .splineToConstantHeading(new Vector2d(30, -14), Math.toRadians(180))
                     .build();
+            wobble2offset = -7;
         } else if (x == 4){
             ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-100))))
-                    .lineTo(new Vector2d(35, -4))
+                    .lineTo(new Vector2d(35, -2))
                     .build();
             xShoot = 37;
             yShoot = -14;
             headingShoot = -10;
         } else {
             ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
+                    .splineToConstantHeading(new Vector2d(30, -14), Math.toRadians(180))
                     .build();
+            wobble2offset = -7;
         }
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(MAX_ANG_VEL),
@@ -113,25 +118,25 @@ public class AutoRingBackup extends AutoMethods {
 
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())
-                .splineToSplineHeading(new Pose2d(28, -14, Math.toRadians(90)), Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(23.3, -14, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(28, -12 + wobble2offset, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(23.3, -12 + wobble2offset, Math.toRadians(90)), Math.toRadians(180))
                 .build();
         if (x == 0) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
-                    .splineToConstantHeading(new Vector2d(72, -5), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(70, 2, Math.toRadians(0)), Math.toRadians(-180))
                     .build();
         } else if (x == 1) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
-                    .splineToLinearHeading(new Pose2d(71, -18, Math.toRadians(-90)), Math.toRadians(180))
+                    .splineToLinearHeading(new Pose2d(74, -18, Math.toRadians(-90)), Math.toRadians(180))
                     .build();
         } else {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToLinearHeading(new Pose2d(110, -5, Math.toRadians(-10)), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(115, -5, Math.toRadians(-10)), Math.toRadians(0))
                     .build();
         }
         Trajectory line = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)
                 .strafeRight(5)
-                .splineToConstantHeading(new Vector2d(70, -30), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
                 .build();
 
         RobotLog.dd(tag,"init done");
@@ -203,7 +208,7 @@ public class AutoRingBackup extends AutoMethods {
             launcher.MovePusher(0);
             sleep(100);
             mecanumDrive.followTrajectory(ringPickUp);
-            sleep(400);
+            sleep(700);
             mecanumDrive.followTrajectory(shootPosition2);
             launcher.inTake.setPower(0);
             launcher.inTake2.setPower(0);
@@ -219,6 +224,8 @@ public class AutoRingBackup extends AutoMethods {
             sleep(300);
             launcher.MovePusher(0);
         }
+        else
+
 
 
         //spin up shooter, and then shoot
