@@ -55,12 +55,12 @@ public class Multiplayer extends LinearOpMode {
                 wobbler.wobblerFull();
             }
 
-            if((gamepad2.right_trigger > 0.1  || endgame) && !gamepad2.x){
-                launcher.inTake.setPower(0);
-                launcher.inTake2.setPower(0);
-            } else if(gamepad2.y){
+            if(gamepad2.y) {
 //                launcher.inTake.setPower(-1);
                 launcher.inTake2.setPower(-1);
+            } else if((gamepad2.right_trigger > 0.1  || endgame) && !gamepad2.x){
+                launcher.inTake.setPower(0);
+                launcher.inTake2.setPower(0);
             } else {
                 launcher.inTake.setPower(1);
                 launcher.inTake2.setPower(1);
