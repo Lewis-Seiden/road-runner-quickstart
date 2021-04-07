@@ -41,10 +41,11 @@ public class AutoRing extends AutoMethods {
         webcam.setPipeline(testPipeline);
         webcam.openCameraDevice();
         webcam.startStreaming(320, 240);
-//        sleep(10000);
+
+        sleep(10000);
         int x = testPipeline.stack;
-        x = 1;
-        int xShoot = 37;
+//        x = 4;
+        int xShoot = 36;
         int yShoot = -14;
         int headingShoot = -8;
         int wobble2offset = 0;
@@ -65,7 +66,7 @@ public class AutoRing extends AutoMethods {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
                     .splineToSplineHeading(new Pose2d(70, 2, 0), Math.toRadians(0))
-                    .splineToSplineHeading(new Pose2d(80, -14, Math.toRadians(-90)), Math.toRadians(-90))
+                    .splineToSplineHeading(new Pose2d(80, -12, Math.toRadians(-90)), Math.toRadians(-90))
                     .build();
             xShoot = 38;
             yShoot = -14;
@@ -75,9 +76,9 @@ public class AutoRing extends AutoMethods {
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
                     .splineToLinearHeading(new Pose2d(115, 0, 0), Math.toRadians(0))
                     .build();
-            xShoot = 33;
-            yShoot = -24;
-            headingShoot = 12;
+            xShoot = 32;
+            yShoot = -28;
+            headingShoot = 3;
         }
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())
@@ -97,11 +98,12 @@ public class AutoRing extends AutoMethods {
             wobble2offset = -7;
         } else if (x == 4){
             ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-100))))
-                    .lineTo(new Vector2d(35, -2))
+                    .lineTo(new Vector2d(36, -7))
                     .build();
-            xShoot = 37;
-            yShoot = -14;
+            xShoot = 35;
+            yShoot = -11;
             headingShoot = -10;
+            wobble2offset = -7;
         } else {
             ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
                     .splineToConstantHeading(new Vector2d(30, -14), Math.toRadians(180))
@@ -123,7 +125,7 @@ public class AutoRing extends AutoMethods {
                 .build();
         if (x == 0) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
-                    .splineToLinearHeading(new Pose2d(64, -10, Math.toRadians(0)), Math.toRadians(-180))
+                    .splineToLinearHeading(new Pose2d(66, -8, Math.toRadians(0)), Math.toRadians(-180))
                     .build();
         } else if (x == 1) {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())
@@ -131,7 +133,7 @@ public class AutoRing extends AutoMethods {
                     .build();
         } else {
             dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
-                    .splineToLinearHeading(new Pose2d(115, -5, Math.toRadians(-10)), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(113, -4, Math.toRadians(-10)), Math.toRadians(45))
                     .build();
         }
         Trajectory line = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)
@@ -144,6 +146,7 @@ public class AutoRing extends AutoMethods {
         wobble.wobblerFull();
 
         while (!isStarted() && !isStopRequested()) {
+            x = testPipeline.stack;
             telemetry.addData("stack ", x);
             telemetry.update();
             RobotLog.dd(tag, "waitforstart");
@@ -190,7 +193,7 @@ public class AutoRing extends AutoMethods {
             launcher.inTake2.setPower(1);
             sleep(100);
             mecanumDrive.followTrajectory(ringPickUp);
-            sleep(400);
+            sleep(1400);
             launcher.inTake.setPower(0);
             launcher.inTake2.setPower(0);
             launcher.MovePusher(0);

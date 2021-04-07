@@ -69,7 +69,7 @@ public class Multiplayer extends LinearOpMode {
             if (gamepad2.right_trigger > 0.1 && !endgame) {
                 if (gamepad2.left_trigger > 0.1) {
 
-                    launcher.SpinFlywheel(0.6);
+                    launcher.SpinFlywheel(0.55);
                 }
                 else {
                     launcher.SpinFlywheel(1);
