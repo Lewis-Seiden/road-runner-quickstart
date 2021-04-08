@@ -70,7 +70,7 @@ public class AutoRing extends AutoMethods {
                     .build();
             xShoot = 38;
             yShoot = -14;
-            headingShoot = -11;
+            headingShoot = -10;
         } else {
 
             dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())
