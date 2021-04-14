@@ -103,7 +103,7 @@ public class AutoRing extends AutoMethods {
             xShoot = 35;
             yShoot = -11;
             headingShoot = -10;
-            wobble2offset = -7;
+            wobble2offset = -9;
         } else {
             ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())
                     .splineToConstantHeading(new Vector2d(30, -14), Math.toRadians(180))
