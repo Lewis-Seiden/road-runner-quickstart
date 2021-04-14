@@ -79,33 +79,33 @@ public class Multiplayer extends LinearOpMode {
                 launcher.SpinFlywheel(0);
 
             }
-//            if(gamepad1.a)
-//            {
-//                double integral = 0;
-//                double previousError = gyro.getAngle();
-//                ElapsedTime time = new ElapsedTime();
-//                double prevTime = time.milliseconds()/1000;
-//                double KP = 1;
-//                double KI = 0;
-//                double KD = 0;
-//                double output;
-//                while(true) {
-//                    double error = -gyro.getAngle();
-//                    double currentTime = time.milliseconds()/1000;
-//                    double deltatime = currentTime - prevTime;
-//                    prevTime = currentTime;
-//                    integral += error * deltatime;
-//                    double derivative = (error - previousError)/deltatime;
-//                    previousError = error;
-//                    output = KP * error + KI * integral + KD * derivative;
-//                    mecanumDrive.SetPowerMecanum(0, 0, output, 1);
-//
-//                }
-//
-//
-//            }
+            if(gamepad1.a)
+            {
+                double integral = 0;
+                double previousError = gyro.getAngle();
+                ElapsedTime time = new ElapsedTime();
+                double prevTime = time.milliseconds()/1000;
+                double KP = 0.0001;
+                double KI = 0;
+                double KD = 0;
+                double output;
+                while(opModeIsActive()) {
+                    double error = -gyro.getAngle();
+                    double currentTime = time.milliseconds()/1000;
+                    double deltatime = currentTime - prevTime;
+                    prevTime = currentTime;
+                    integral += error * deltatime;
+                    double derivative = (error - previousError)/deltatime;
+                    previousError = error;
+                    output = KP * error + KI * integral + KD * derivative;
+                    mecanumDrive.SetPowerMecanum(0, 0, output, 1);
+
+                }
+
+
+            }
             if (gamepad2.right_trigger > 0.1 && endgame) {
-                launcher.SpinFlywheel(1);
+                launcher.SpinFlywheel(0.9);
             }
             if (gamepad1.left_trigger > 0.1) {
                 fineTune = 3;
