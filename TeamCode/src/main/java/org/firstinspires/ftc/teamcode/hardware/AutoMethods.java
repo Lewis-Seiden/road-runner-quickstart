@@ -141,7 +141,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 .strafeRight(10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)//goes to shoot
-                .splineToSplineHeading(new Pose2d(38, -14, Math.toRadians(-10)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(38, -14, Math.toRadians(-11)), Math.toRadians(180))
                 .build();
 
 

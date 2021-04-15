@@ -90,14 +90,18 @@ public class Multiplayer extends LinearOpMode {
                 launcher.SpinFlywheel(0);
 
             }
+            if(gamepad1.b)
+            {
+                pidActive = false;
+            }
             if(gamepad1.a)
             {
                  integral = 0;
                  previousError = -gyro.getAngle();
                  time = new ElapsedTime();
                  prevTime = time.milliseconds()/1000;
-                 KP = 0.5;
-                 KI = 0;
+                 KP = 0.02;
+                 KI = 0.01;
                  KD = 0;
                  pidActive = true;
 
@@ -113,7 +117,8 @@ public class Multiplayer extends LinearOpMode {
                 double derivative = (error - previousError)/deltatime;
                 previousError = error;
                 double output = KP * error + KI * integral + KD * derivative;
-                mecanumDrive.SetPowerMecanum(0, 0, output, 1);
+                mecanumDrive.SetPowerMecanum(0, 0, -output, 1);
+                telemetry.addData("Current Gyro Headng", gyro.getAngle());
             }
 
 
