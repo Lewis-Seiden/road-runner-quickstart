@@ -27,7 +27,7 @@ public abstract class AutoMethods extends LinearOpMode {
     protected Wobbler wobble;
     protected Launcher launcher;
     final double TICKS_PER_INCH = 60.7873786408;
-    SampleMecanumDrive mecanumDrive;
+    protected SampleMecanumDrive mecanumDrive;
     int stack;
     String tag = "autoDebug";
 

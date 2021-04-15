@@ -33,12 +33,23 @@ public class Multiplayer extends LinearOpMode {
         boolean wobbleOpen = true;
         boolean ringIn = false;
         boolean endgame = false;
+        boolean pidActive = false;
+        double integral = 0;
+        double previousError = -gyro.getAngle();
+        ElapsedTime time = new ElapsedTime();
+        double prevTime = time.milliseconds()/1000;
+        double KP = 0.0001;
+        double KI = 0;
+        double KD = 0;
 
         waitForStart();
         start();
 //        launcher.runDaRunner(1);
         while (opModeIsActive()) {
-            mecanumDrive.SetPowerMecanum(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, fineTune);
+            if(pidActive == false){
+                mecanumDrive.SetPowerMecanum(gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, fineTune);
+
+            }
             if (gamepad2.b) {
                 wobbler.wobblerClose();
                 wobbleOpen = false;
@@ -81,29 +92,32 @@ public class Multiplayer extends LinearOpMode {
             }
             if(gamepad1.a)
             {
-                double integral = 0;
-                double previousError = gyro.getAngle();
-                ElapsedTime time = new ElapsedTime();
-                double prevTime = time.milliseconds()/1000;
-                double KP = 0.0001;
-                double KI = 0;
-                double KD = 0;
-                double output;
-                while(opModeIsActive()) {
-                    double error = -gyro.getAngle();
-                    double currentTime = time.milliseconds()/1000;
-                    double deltatime = currentTime - prevTime;
-                    prevTime = currentTime;
-                    integral += error * deltatime;
-                    double derivative = (error - previousError)/deltatime;
-                    previousError = error;
-                    output = KP * error + KI * integral + KD * derivative;
-                    mecanumDrive.SetPowerMecanum(0, 0, output, 1);
-
-                }
+                 integral = 0;
+                 previousError = -gyro.getAngle();
+                 time = new ElapsedTime();
+                 prevTime = time.milliseconds()/1000;
+                 KP = 0.5;
+                 KI = 0;
+                 KD = 0;
+                 pidActive = true;
 
 
             }
+            if(pidActive)
+            {
+                double error = -gyro.getAngle();
+                double currentTime = time.milliseconds()/1000;
+                double deltatime = currentTime - prevTime;
+                prevTime = currentTime;
+                integral += error * deltatime;
+                double derivative = (error - previousError)/deltatime;
+                previousError = error;
+                double output = KP * error + KI * integral + KD * derivative;
+                mecanumDrive.SetPowerMecanum(0, 0, output, 1);
+            }
+
+
+
             if (gamepad2.right_trigger > 0.1 && endgame) {
                 launcher.SpinFlywheel(0.9);
             }
@@ -126,7 +140,7 @@ public class Multiplayer extends LinearOpMode {
             //Makes the robot shoot 3 ring
             telemetry.addLine("isEndgame: " + endgame);
             if (gamepad2.right_bumper && !endgame) {
-                mecanumDrive.SetPowerMecanum(0,0,0,1);
+
                 for(int i = 0; i < 3; i++) {
                     launcher.MovePusher(0.3);
                     sleep(400);
