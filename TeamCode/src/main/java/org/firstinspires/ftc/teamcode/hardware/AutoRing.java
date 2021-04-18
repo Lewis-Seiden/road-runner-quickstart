@@ -45,6 +45,7 @@ public class AutoRing extends AutoMethods {
         sleep(10000);
         stack = testPipeline.stack;
         launcher.intakeFlipperRun(0);
+        launcher.ringBlocker.setPosition(1);
 
         if(stack == 0){
             autoStack0();

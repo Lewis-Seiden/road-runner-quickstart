@@ -100,9 +100,9 @@ public class Multiplayer extends LinearOpMode {
                  previousError = -gyro.getAngle();
                  time = new ElapsedTime();
                  prevTime = time.milliseconds()/1000;
-                 KP = 0.02;
-                 KI = 0.01;
-                 KD = 0;
+                 KP = 0.035;
+                 KI = 0;
+                 KD = 0.0038;
                  pidActive = true;
 
 
@@ -166,7 +166,7 @@ public class Multiplayer extends LinearOpMode {
             if (gamepad2.left_bumper){
                 launcher.ringBlocker.setPosition(0.6);
             }else if (endgame){
-                launcher.ringBlocker.setPosition(0);
+                launcher.ringBlocker.setPosition(1);
             }else {
                 launcher.ringBlocker.setPosition(0.4);
             }
