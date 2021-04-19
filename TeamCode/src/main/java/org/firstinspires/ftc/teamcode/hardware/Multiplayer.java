@@ -35,12 +35,16 @@ public class Multiplayer extends LinearOpMode {
         boolean endgame = false;
         boolean pidActive = false;
         double integral = 0;
-        double previousError = -gyro.getAngle();
+        double previousError = 2-gyro.getAngle();
         ElapsedTime time = new ElapsedTime();
         double prevTime = time.milliseconds()/1000;
         double KP = 0.0001;
         double KI = 0;
         double KD = 0;
+        double error = 0;
+
+        double targetPosition = 0;
+
 
         waitForStart();
         start();
@@ -97,19 +101,30 @@ public class Multiplayer extends LinearOpMode {
             if(gamepad1.a)
             {
                  integral = 0;
-                 previousError = -gyro.getAngle();
+                 if(gyro.getAngle() > 0.0001)
+                 {
+                     targetPosition = -7;
+                 }
+                 else {
+                     targetPosition = -3;
+                 }
+
+                 previousError = targetPosition-gyro.getAngle();
+
                  time = new ElapsedTime();
                  prevTime = time.milliseconds()/1000;
-                 KP = 0.035;
-                 KI = 0;
-                 KD = 0.0038;
+                 KP = 0.03;
+                 KI = 0.0;
+                 KD = 0.0055;
                  pidActive = true;
+
 
 
             }
             if(pidActive)
             {
-                double error = -gyro.getAngle();
+
+                error = targetPosition-gyro.getAngle();
                 double currentTime = time.milliseconds()/1000;
                 double deltatime = currentTime - prevTime;
                 prevTime = currentTime;

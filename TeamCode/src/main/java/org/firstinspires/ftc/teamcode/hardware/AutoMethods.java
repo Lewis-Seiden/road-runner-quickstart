@@ -69,7 +69,7 @@ public abstract class AutoMethods extends LinearOpMode {
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true) //goes to the line
                 .strafeRight(5)
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(65, -30, 0), Math.toRadians(180))
                 .build();
 
         RobotLog.dd(tag,"init done");
@@ -174,7 +174,7 @@ public abstract class AutoMethods extends LinearOpMode {
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
                 .strafeRight(5)
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(65, -30, 0), Math.toRadians(180))
                 .build();
 
 
@@ -296,7 +296,7 @@ public abstract class AutoMethods extends LinearOpMode {
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
                 .strafeRight(5)
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(65, -30, 0), Math.toRadians(180))
                 .build();
 
 
