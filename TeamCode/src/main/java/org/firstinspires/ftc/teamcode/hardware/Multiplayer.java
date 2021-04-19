@@ -97,23 +97,24 @@ public class Multiplayer extends LinearOpMode {
             if(gamepad1.b)
             {
                 pidActive = false;
+                targetPosition += 0.5;
             }
             if(gamepad1.a)
             {
                  integral = 0;
                  if(gyro.getAngle() > 0.0001)
                  {
-                     targetPosition = -7;
+                     targetPosition = -12;
                  }
                  else {
-                     targetPosition = -3;
+                     targetPosition = -8;
                  }
 
                  previousError = targetPosition-gyro.getAngle();
 
                  time = new ElapsedTime();
                  prevTime = time.milliseconds()/1000;
-                 KP = 0.03;
+                 KP = 0.035;
                  KI = 0.0;
                  KD = 0.0055;
                  pidActive = true;
@@ -160,13 +161,14 @@ public class Multiplayer extends LinearOpMode {
             //Makes the robot shoot 3 ring
             telemetry.addLine("isEndgame: " + endgame);
             if (gamepad2.right_bumper && !endgame) {
-
+                mecanumDrive.SetPowerMecanum(0,0,0,0);
                 for(int i = 0; i < 3; i++) {
                     launcher.MovePusher(0.3);
                     sleep(400);
                     launcher.MovePusher(0);
                     sleep(400);
                 }
+                pidActive = false;
 
             } else if (gamepad2.right_bumper && endgame) {
                 launcher.MovePusher(0.3);
