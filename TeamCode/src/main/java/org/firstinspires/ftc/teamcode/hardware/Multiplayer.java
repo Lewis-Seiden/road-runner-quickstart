@@ -97,7 +97,7 @@ public class Multiplayer extends LinearOpMode {
             if(gamepad1.b)
             {
                 pidActive = false;
-                targetPosition += 0.5;
+
             }
             if(gamepad1.a)
             {
