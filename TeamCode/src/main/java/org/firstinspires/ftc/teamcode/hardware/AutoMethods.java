@@ -138,7 +138,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 .build();
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())//so we dont hit wobbler
-                .strafeRight(10)
+                .strafeRight    (10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)//goes to shoot
                 .splineToSplineHeading(new Pose2d(38, -14, Math.toRadians(-11)), Math.toRadians(180))
@@ -174,7 +174,7 @@ public abstract class AutoMethods extends LinearOpMode {
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
                 .strafeRight(5)
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(65, -30, 0), Math.toRadians(180))
                 .build();
 
 
@@ -256,7 +256,7 @@ public abstract class AutoMethods extends LinearOpMode {
         //does two wobblers, and shoots 3 rings in starter stack
 
         Trajectory dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())//drops wobbler one
-                .splineToLinearHeading(new Pose2d(115, 0, 0), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(120, 0, 0), Math.toRadians(0))
                 .build();
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())//moves away from wobbler
@@ -271,8 +271,8 @@ public abstract class AutoMethods extends LinearOpMode {
                 new AngularVelocityConstraint(MAX_ANG_VEL),
                 new MecanumVelocityConstraint(MAX_VEL/2, TRACK_WIDTH)));
 
-        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-100))))//grabs 3 rings
-                .lineTo(new Vector2d(36, -7))
+        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-110))))//grabs 3 rings
+                .lineTo(new Vector2d(36, -6))
                 .build();
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(//speed up
@@ -281,22 +281,22 @@ public abstract class AutoMethods extends LinearOpMode {
 
 
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())//shoots starter stack rings
-                .splineToLinearHeading(new Pose2d(35, -11, Math.toRadians(-10)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(35, -6, Math.toRadians(30)), Math.toRadians(0))
                 .build();
 
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())//grabs second wobbler
                 .splineToSplineHeading(new Pose2d(28, -21, Math.toRadians(90)), Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(23.3, -21, Math.toRadians(90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(24.3, -18, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
         Trajectory dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())//drops second wobbler
-                .splineToLinearHeading(new Pose2d(113, -4, Math.toRadians(-10)), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(113, -6, Math.toRadians(-10)), Math.toRadians(45))
                 .build();
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
                 .strafeRight(5)
-                .splineToConstantHeading(new Vector2d(65, -30), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(65, -30, 0), Math.toRadians(180))
                 .build();
 
 
@@ -340,7 +340,7 @@ public abstract class AutoMethods extends LinearOpMode {
         RobotLog.dd(tag,"shoot1done");//marks the starter rings being shot
 
 
-        mecanumDrive.turn(Math.toRadians(-100 - mecanumDrive.getPoseEstimate().getHeading()));
+        mecanumDrive.turn(Math.toRadians(-110 - mecanumDrive.getPoseEstimate().getHeading()));
         launcher.inTake.setPower(1);
         launcher.inTake2.setPower(1);
         launcher.MovePusher(0);
