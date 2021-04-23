@@ -134,14 +134,14 @@ public abstract class AutoMethods extends LinearOpMode {
 
         Trajectory dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())//drops first wobbler
                 .splineToSplineHeading(new Pose2d(70, 2, 0), Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(80, -12, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToSplineHeading(new Pose2d(83, -8, Math.toRadians(-90)), Math.toRadians(-90))
                 .build();
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())//so we dont hit wobbler
                 .strafeRight    (10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)//goes to shoot
-                .splineToSplineHeading(new Pose2d(38, -14, Math.toRadians(-11)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(-6)), Math.toRadians(180))
                 .build();
 
 
@@ -150,7 +150,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 new MecanumVelocityConstraint(MAX_VEL/2, TRACK_WIDTH)));
 
         Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())//grabs ring
-                .splineToConstantHeading(new Vector2d(30, -14), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(28, -16), Math.toRadians(180))
                 .build();
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(//speeds back up
@@ -159,7 +159,7 @@ public abstract class AutoMethods extends LinearOpMode {
 
 
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())//shoots the ring it grabbed
-                .splineToLinearHeading(new Pose2d(38, -14, Math.toRadians(-10)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(37, -12, Math.toRadians(-6)), Math.toRadians(0))
                 .build();
 
 
@@ -169,7 +169,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 .build();
 
         Trajectory dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())//drops the second wobbler
-                .splineToLinearHeading(new Pose2d(74, -18, Math.toRadians(-90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(74, -8, Math.toRadians(-90)), Math.toRadians(180))
                 .build();
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
@@ -258,47 +258,52 @@ public abstract class AutoMethods extends LinearOpMode {
         Trajectory dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())//drops wobbler one
                 .splineToLinearHeading(new Pose2d(120, 0, 0), Math.toRadians(0))
                 .build();
+        RobotLog.dd(tag,"wobblerdrop1init");
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())//moves away from wobbler
                 .strafeRight(10)
                 .build();
+
+        RobotLog.dd(tag,"wobblerleaveinit");
+
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)//shoots starting rings
-                .splineToSplineHeading(new Pose2d(32, -28, Math.toRadians(3)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(37, -27, Math.toRadians(5)), Math.toRadians(180))
                 .build();
 
+        RobotLog.dd(tag,"shoot1init");
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(//slow down
                 new AngularVelocityConstraint(MAX_ANG_VEL),
                 new MecanumVelocityConstraint(MAX_VEL/2, TRACK_WIDTH)));
-
+        RobotLog.dd(tag,"velconstraintinit");
         Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-110))))//grabs 3 rings
-                .lineTo(new Vector2d(36, -6))
+                .lineTo(new Vector2d(36, -8))
                 .build();
-
+        RobotLog.dd(tag,"ringpickupinit");
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(//speed up
                 new AngularVelocityConstraint(MAX_ANG_VEL),
                 new MecanumVelocityConstraint(MAX_VEL, TRACK_WIDTH)));
 
-
+        RobotLog.dd(tag,"velconstraint2init");
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())//shoots starter stack rings
-                .splineToLinearHeading(new Pose2d(35, -6, Math.toRadians(30)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(38, -8, Math.toRadians(10)), Math.toRadians(0))
                 .build();
-
+        RobotLog.dd(tag,"shoot2init");
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())//grabs second wobbler
-                .splineToSplineHeading(new Pose2d(28, -21, Math.toRadians(90)), Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(24.3, -18, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(28, -18, Math.toRadians(90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(25, -18, Math.toRadians(90)), Math.toRadians(180))
                 .build();
-
-        Trajectory dropSecondWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())//drops second wobbler
+        RobotLog.dd(tag,"wobbler2init");
+        Trajectory dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())//drops second wobbler
                 .splineToLinearHeading(new Pose2d(113, -6, Math.toRadians(-10)), Math.toRadians(45))
                 .build();
-
+        RobotLog.dd(tag,"wobblerdrop2init");
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
                 .strafeRight(5)
                 .splineToSplineHeading(new Pose2d(65, -30, 0), Math.toRadians(180))
                 .build();
-
+        RobotLog.dd(tag,"lineparkinit");
 
         RobotLog.dd(tag,"init done");
         wobble.wobblerClose();
@@ -307,7 +312,7 @@ public abstract class AutoMethods extends LinearOpMode {
         while (!isStarted() && !isStopRequested()) {//waits for start
             telemetry.addData("stack ", stack);
             telemetry.update();
-            RobotLog.dd(tag, "waitforstart");
+//            RobotLog.dd(tag, "waitforstart");
         }
 
 
@@ -367,7 +372,7 @@ public abstract class AutoMethods extends LinearOpMode {
         wobble.wobblerDown();
 
         mecanumDrive.followTrajectory(secondWobble);
-        sleep(500);
+        sleep(300);
         wobble.wobblerClose();
         sleep(500);
 
