@@ -72,7 +72,7 @@ public class Multiplayer extends LinearOpMode {
             }
 
 
-            if(gamepad1.y) {
+            if(gamepad2.y) {
 //                launcher.inTake.setPower(-1);
                 launcher.inTake2.setPower(-1);
             } else if((gamepad1.right_trigger > 0.1  || endgame) && !gamepad2.x){
@@ -172,7 +172,7 @@ public class Multiplayer extends LinearOpMode {
                 }
                 pidActive = false;
 
-            } else if (gamepad1.right_bumper && endgame) {
+            } else if ((gamepad1.right_bumper || gamepad2.right_bumper) && endgame) {
                 launcher.MovePusher(0.3);
                 sleep(400);
                 launcher.MovePusher(0);
