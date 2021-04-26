@@ -42,6 +42,7 @@ public class Multiplayer extends LinearOpMode {
         double KI = 0;
         double KD = 0;
         double error = 0;
+        boolean flywheelSpin = false;
 
         double targetPosition = 0;
 
@@ -69,11 +70,19 @@ public class Multiplayer extends LinearOpMode {
             } else if (gamepad2.left_stick_y < -0.05 && !wobbleOpen) {
                 wobbler.wobblerFull();
             }
+            if (gamepad1.left_bumper) {
+                flywheelSpin = true;
+                launcher.inTake.setPower(0);
+                launcher.inTake2.setPower(0);
+            } else if (gamepad1.x) {
+                launcher.inTake.setPower(1);
+                launcher.inTake2.setPower(1);
+            }
 
-            if(gamepad2.y) {
+            if(gamepad1.y) {
 //                launcher.inTake.setPower(-1);
                 launcher.inTake2.setPower(-1);
-            } else if((gamepad2.right_trigger > 0.1  || endgame) && !gamepad2.x){
+            } else if((gamepad1.right_trigger > 0.1  || endgame) && !gamepad2.x){
                 launcher.inTake.setPower(0);
                 launcher.inTake2.setPower(0);
             } else {
@@ -81,8 +90,8 @@ public class Multiplayer extends LinearOpMode {
                 launcher.inTake2.setPower(1);
             }
 
-            if (gamepad2.right_trigger > 0.1 && !endgame) {
-                if (gamepad2.left_trigger > 0.1) {
+            if ((gamepad1.right_trigger > 0.1 && !endgame) || flywheelSpin) {
+                if (gamepad1.left_trigger > 0.1) {
 
                     launcher.SpinFlywheel(0.55);
                 }
@@ -139,7 +148,7 @@ public class Multiplayer extends LinearOpMode {
 
 
 
-            if (gamepad2.right_trigger > 0.1 && endgame) {
+            if (gamepad1.right_trigger > 0.1 && endgame) {
                 launcher.SpinFlywheel(0.9);
             }
             if (gamepad1.left_trigger > 0.1) {
@@ -160,7 +169,7 @@ public class Multiplayer extends LinearOpMode {
             }
             //Makes the robot shoot 3 ring
             telemetry.addLine("isEndgame: " + endgame);
-            if (gamepad2.right_bumper && !endgame) {
+            if (gamepad1.right_bumper && !endgame) {
                 mecanumDrive.SetPowerMecanum(0,0,0,0);
                 for(int i = 0; i < 3; i++) {
                     launcher.MovePusher(0.3);
@@ -169,8 +178,8 @@ public class Multiplayer extends LinearOpMode {
                     sleep(400);
                 }
                 pidActive = false;
-
-            } else if (gamepad2.right_bumper && endgame) {
+                flywheelSpin = false;
+            } else if (gamepad1.right_bumper && endgame) {
                 launcher.MovePusher(0.3);
                 sleep(400);
                 launcher.MovePusher(0);

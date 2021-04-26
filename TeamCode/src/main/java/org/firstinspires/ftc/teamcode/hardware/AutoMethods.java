@@ -55,12 +55,12 @@ public abstract class AutoMethods extends LinearOpMode {
                 .build();
 
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true) //goes to shoot
-                .splineToSplineHeading(new Pose2d(36, -14, Math.toRadians(-8)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(42, -14, Math.toRadians(-4)), Math.toRadians(180))
                 .build();
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition1.end()) //grabs the second wobbler
-                .splineToSplineHeading(new Pose2d(28, -20, Math.toRadians(90)), Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(23.3, -20, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(28, -23, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(23.3, -23, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
         Trajectory dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())//drops the second wobbler
@@ -134,14 +134,14 @@ public abstract class AutoMethods extends LinearOpMode {
 
         Trajectory dropWobbler = mecanumDrive.trajectoryBuilder(new Pose2d())//drops first wobbler
                 .splineToSplineHeading(new Pose2d(70, 2, 0), Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(83, -8, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToSplineHeading(new Pose2d(83, -7, Math.toRadians(-90)), Math.toRadians(-90))
                 .build();
 
         Trajectory wobbleLeave = mecanumDrive.trajectoryBuilder(dropWobbler.end())//so we dont hit wobbler
                 .strafeRight    (10)
                 .build();
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)//goes to shoot
-                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(-6)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(42.5, -11, Math.toRadians(-6)), Math.toRadians(180))
                 .build();
 
 
@@ -150,7 +150,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 new MecanumVelocityConstraint(MAX_VEL/2, TRACK_WIDTH)));
 
         Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end())//grabs ring
-                .splineToConstantHeading(new Vector2d(28, -16), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(30, -16), Math.toRadians(180))
                 .build();
 
         mecanumDrive.velConstraint = new MinVelocityConstraint(Arrays.asList(//speeds back up
@@ -159,17 +159,17 @@ public abstract class AutoMethods extends LinearOpMode {
 
 
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())//shoots the ring it grabbed
-                .splineToLinearHeading(new Pose2d(37, -12, Math.toRadians(-6)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(42, -11, Math.toRadians(-6)), Math.toRadians(0))
                 .build();
 
 
         Trajectory secondWobble = mecanumDrive.trajectoryBuilder(shootPosition2.end())//grabs second wobbler
                 .splineToSplineHeading(new Pose2d(28, -19, Math.toRadians(90)), Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(23.3, -19, Math.toRadians(90)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(24, -19, Math.toRadians(90)), Math.toRadians(180))
                 .build();
 
         Trajectory dropSecondWobbler = mecanumDrive.trajectoryBuilder(secondWobble.end())//drops the second wobbler
-                .splineToLinearHeading(new Pose2d(74, -8, Math.toRadians(-90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(74, -7, Math.toRadians(-90)), Math.toRadians(180))
                 .build();
 
         Trajectory linePark = mecanumDrive.trajectoryBuilder(dropSecondWobbler.end(), true)//parks on the line
@@ -267,7 +267,7 @@ public abstract class AutoMethods extends LinearOpMode {
         RobotLog.dd(tag,"wobblerleaveinit");
 
         Trajectory shootPosition1 = mecanumDrive.trajectoryBuilder(wobbleLeave.end(), true)//shoots starting rings
-                .splineToSplineHeading(new Pose2d(37, -27, Math.toRadians(5)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(39, -27, Math.toRadians(7)), Math.toRadians(180))
                 .build();
 
         RobotLog.dd(tag,"shoot1init");
@@ -276,7 +276,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 new AngularVelocityConstraint(MAX_ANG_VEL),
                 new MecanumVelocityConstraint(MAX_VEL/2, TRACK_WIDTH)));
         RobotLog.dd(tag,"velconstraintinit");
-        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-110))))//grabs 3 rings
+        Trajectory ringPickUp = mecanumDrive.trajectoryBuilder(shootPosition1.end().plus(new Pose2d(0,0, Math.toRadians(-100))))//grabs 3 rings
                 .lineTo(new Vector2d(36, -8))
                 .build();
         RobotLog.dd(tag,"ringpickupinit");
@@ -286,7 +286,7 @@ public abstract class AutoMethods extends LinearOpMode {
 
         RobotLog.dd(tag,"velconstraint2init");
         Trajectory shootPosition2 = mecanumDrive.trajectoryBuilder(ringPickUp.end())//shoots starter stack rings
-                .splineToLinearHeading(new Pose2d(38, -8, Math.toRadians(10)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(40, -8, Math.toRadians(-5)), Math.toRadians(0))
                 .build();
         RobotLog.dd(tag,"shoot2init");
 
@@ -345,7 +345,7 @@ public abstract class AutoMethods extends LinearOpMode {
         RobotLog.dd(tag,"shoot1done");//marks the starter rings being shot
 
 
-        mecanumDrive.turn(Math.toRadians(-110 - mecanumDrive.getPoseEstimate().getHeading()));
+        mecanumDrive.turn(Math.toRadians(-100 - mecanumDrive.getPoseEstimate().getHeading()));
         launcher.inTake.setPower(1);
         launcher.inTake2.setPower(1);
         launcher.MovePusher(0);
